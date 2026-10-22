@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>毎日のページ</title>
+<style>
+  :root { --bg: #f4f6f9; --card: #ffffff; --ink: #151a22; --sub: #5b6575; --line: #dce2ea; --accent: #2d5bd7; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #12161c; --card: #1b2129; --ink: #e8edf3; --sub: #9aa5b4; --line: #2c3540; --accent: #7aa2ff; }
+  }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font-family: "Noto Sans JP", system-ui, sans-serif; line-height: 1.6; }
+  main { max-width: 560px; margin: 0 auto; padding: 32px 16px; }
+  h1 { font-size: 1.4rem; margin: 0 0 4px; }
+  p.sub { color: var(--sub); margin: 0 0 24px; font-size: .9rem; }
+  a.card { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+           padding: 16px 18px; margin-bottom: 12px; color: inherit; text-decoration: none; }
+  a.card:hover { border-color: var(--accent); }
+  a.card b { display: block; font-size: 1.1rem; color: var(--accent); }
+  a.card span { color: var(--sub); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>毎日のページ</h1>
+  <p class="sub">毎日の自動実行のたびに、自動で新しくなります。</p>
+  <a class="card" href="trend-radar/">
+    <b>流行レーダー</b>
+    <span>流行の立ち上がりと終わりを毎朝さがす（毎朝6時ごろ更新）</span>
+  </a>
+  <a class="card" href="paper-trader/">
+    <b>AI投資委員会</b>
+    <span>架空のお金で米国株を運用する記録（毎朝7時ごろ・市場が開いている間は毎時更新）</span>
+  </a>
+</main>
+</body>
+</html>

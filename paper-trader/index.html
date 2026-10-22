@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+</head>
+<body>
+<title>AI投資委員会</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Noto+Sans+JP:wght@400;500&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap">
+<style>
+  :root{
+    --bg:#eceff4; --surface:#ffffff; --surface-2:#f4f7fa; --inset:#eef2f7;
+    --ink:#131821; --ink-2:#4c5666; --ink-3:#7b8593;
+    --line:#dae0e9; --line-2:#c3ccd8;
+    --accent:#2d5bd7;
+    --up:#0f7a52; --down:#c2402f; --warn:#a8701a; --flat:#6c7686;
+    --a-fund:#0f7a52; --a-tech:#2d5bd7; --a-macro:#a8701a; --a-risk:#7b5ea7;
+    --a-chair:#131821;
+    --sans:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;
+    --disp:"Zen Kaku Gothic New","Noto Sans JP","Hiragino Kaku Gothic ProN",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Consolas,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#111419; --surface:#191e27; --surface-2:#202733; --inset:#232b38;
+      --ink:#e7ecf3; --ink-2:#a8b3c2; --ink-3:#7c8797;
+      --line:#2a3340; --line-2:#3b4655;
+      --accent:#7ba3f0;
+      --up:#4fb98a; --down:#e8776a; --warn:#d9a445; --flat:#8b95a5;
+      --a-fund:#4fb98a; --a-tech:#7ba3f0; --a-macro:#d9a445; --a-risk:#b295d8;
+      --a-chair:#e7ecf3;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111419; --surface:#191e27; --surface-2:#202733; --inset:#232b38;
+    --ink:#e7ecf3; --ink-2:#a8b3c2; --ink-3:#7c8797;
+    --line:#2a3340; --line-2:#3b4655;
+    --accent:#7ba3f0;
+    --up:#4fb98a; --down:#e8776a; --warn:#d9a445; --flat:#8b95a5;
+    --a-fund:#4fb98a; --a-tech:#7ba3f0; --a-macro:#d9a445; --a-risk:#b295d8;
+    --a-chair:#e7ecf3;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:15px; line-height:1.75;
+    -webkit-text-size-adjust:100%;
+  }
+  h1,h2,h3{font-family:var(--disp); text-wrap:balance; margin:0;}
+  .mono,.num{font-family:var(--mono); font-variant-numeric:tabular-nums;}
+
+  /* ---- 上部のバー ---- */
+  .topbar{
+    position:sticky; top:env(safe-area-inset-top, 0px); z-index:20;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-in{max-width:1080px; margin:0 auto; padding:10px 16px 0;}
+  .brand{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+  .brand h1{font-size:1.05rem; font-weight:700; letter-spacing:.02em;}
+  .brand .as-of{font-family:var(--mono); font-size:.72rem; color:var(--ink-3);}
+  .tabs{display:flex; gap:2px; margin-top:8px; overflow-x:auto; scrollbar-width:none;}
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{
+    appearance:none; border:0; background:none; cursor:pointer;
+    font-family:var(--disp); font-size:.88rem; font-weight:500; color:var(--ink-3);
+    padding:8px 14px 10px; border-bottom:2px solid transparent; white-space:nowrap;
+  }
+  .tab[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--accent);}
+  .tab:focus-visible{outline:2px solid var(--accent); outline-offset:-2px; border-radius:4px;}
+
+  main{max-width:1080px; margin:0 auto; padding:24px 16px 72px;}
+  .stack{display:flex; flex-direction:column; gap:26px;}
+  .block{display:flex; flex-direction:column; gap:12px;}
+  .block > h2{
+    font-size:.76rem; font-weight:700; letter-spacing:.14em; color:var(--ink-3);
+    text-transform:uppercase;
+  }
+  .note{font-size:.8rem; color:var(--ink-3); line-height:1.7; margin:0;}
+  .panel{background:var(--surface); border:1px solid var(--line); border-radius:10px;}
+  .pad{padding:16px;}
+
+  /* ---- ホーム:総資産 ---- */
+  .headline{display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap;}
+  .headline .big{font-family:var(--mono); font-size:2.6rem; font-weight:600; line-height:1;}
+  .headline .delta{font-family:var(--mono); font-size:1.05rem; padding-bottom:4px;}
+  .subline{font-size:.8rem; color:var(--ink-3); font-family:var(--mono);}
+  .subline.live{margin-top:6px; color:var(--up);}
+  .subline.live .sector{color:var(--ink-3);}
+  @media (prefers-reduced-motion:no-preference){
+    .subline.live{animation:livepulse 2.4s ease-in-out infinite;}
+  }
+  @keyframes livepulse{50%{opacity:.6;}}
+  .pos{color:var(--up);} .neg{color:var(--down);} .flat{color:var(--flat);}
+
+  /* ---- ベースライン比較 ---- */
+  .bl{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .bl-row{display:grid; grid-template-columns:1fr auto auto; align-items:center; gap:12px;
+          background:var(--surface); padding:11px 14px;}
+  .bl-row.me{background:var(--surface-2);}
+  .bl-name{display:flex; align-items:center; gap:9px; font-size:.86rem; min-width:0;}
+  .bl-name b{font-weight:500;}
+  .swatch{width:12px; height:3px; border-radius:2px; flex:none;}
+  .bl-total{font-family:var(--mono); font-size:.86rem; color:var(--ink-2);}
+  .bl-diff{font-family:var(--mono); font-size:.86rem; font-weight:600; min-width:74px; text-align:right;}
+
+  /* ---- グラフ ---- */
+  .chart{position:relative; height:300px;}
+  .chart.sm{height:190px;}
+  @media (max-width:640px){ .chart{height:230px;} .chart.sm{height:160px;} }
+
+  /* ---- 表 ---- */
+  .scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  table{width:100%; border-collapse:collapse; font-size:.84rem;}
+  thead th{
+    font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3);
+    font-weight:600; text-align:left; padding:0 12px 8px; white-space:nowrap;
+    border-bottom:1px solid var(--line);
+  }
+  tbody td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:0;}
+  th.r,td.r{text-align:right;}
+  td.num,th.num{font-family:var(--mono); font-variant-numeric:tabular-nums; text-align:right; white-space:nowrap;}
+  .tk{font-family:var(--mono); font-weight:600; letter-spacing:.01em;}
+  .sector{font-size:.72rem; color:var(--ink-3);}
+
+  /* 保有比率のバー */
+  .wbar{position:relative; height:5px; background:var(--inset); border-radius:3px; min-width:56px;}
+  .wbar i{position:absolute; inset:0 auto 0 0; background:var(--accent); border-radius:3px;}
+  .wbar u{position:absolute; top:-3px; bottom:-3px; width:1.5px; background:var(--line-2);}
+
+  /* ---- ラウンド切り替え・表示切り替え ---- */
+  .segbar{display:flex; gap:6px; flex-wrap:wrap;}
+  .segbar.right{justify-content:flex-end;}
+  .seg{
+    font:inherit; font-size:.78rem; color:var(--ink-2); cursor:pointer; text-align:left;
+    background:var(--surface); border:1px solid var(--line-2); border-radius:9px;
+    padding:6px 11px; display:flex; flex-direction:column; gap:1px;
+  }
+  .seg.on{
+    color:var(--ink); border-color:var(--accent);
+    background:color-mix(in srgb, var(--accent) 8%, var(--surface));
+  }
+  .seg:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .seg-sub{font-family:var(--mono); font-size:.68rem; color:var(--ink-3);}
+  .seg.mini{flex-direction:row; align-items:center; gap:6px; padding:4px 10px; font-size:.74rem;}
+
+  /* ---- チップ・バッジ ---- */
+  .chip{
+    display:inline-flex; align-items:center; gap:5px; font-family:var(--mono);
+    font-size:.7rem; font-weight:600; letter-spacing:.04em;
+    padding:2px 7px; border-radius:4px; border:1px solid;
+  }
+  .s-BUY{color:var(--up); border-color:color-mix(in srgb, var(--up) 40%, transparent); background:color-mix(in srgb, var(--up) 9%, transparent);}
+  .s-SELL{color:var(--down); border-color:color-mix(in srgb, var(--down) 40%, transparent); background:color-mix(in srgb, var(--down) 9%, transparent);}
+  .s-AVOID{color:var(--warn); border-color:color-mix(in srgb, var(--warn) 40%, transparent); background:color-mix(in srgb, var(--warn) 9%, transparent);}
+  .s-HOLD{color:var(--flat); border-color:var(--line-2); background:transparent;}
+  .badge{font-size:.68rem; letter-spacing:.08em; font-weight:700; padding:1px 7px; border-radius:99px;}
+  .b-conflict{color:var(--down); background:color-mix(in srgb, var(--down) 12%, transparent);}
+  .b-split{color:var(--warn); background:color-mix(in srgb, var(--warn) 12%, transparent);}
+  .b-agree{color:var(--ink-3); background:var(--inset);}
+
+  /* ---- 日付の選択 ---- */
+  .pills{display:flex; gap:6px; overflow-x:auto; padding-bottom:2px; scrollbar-width:none;}
+  .pills::-webkit-scrollbar{display:none;}
+  .pill{
+    appearance:none; cursor:pointer; white-space:nowrap;
+    font-family:var(--mono); font-size:.78rem;
+    padding:6px 12px; border-radius:99px;
+    border:1px solid var(--line-2); background:var(--surface); color:var(--ink-2);
+  }
+  .pill[aria-pressed="true"]{background:var(--ink); color:var(--bg); border-color:var(--ink);}
+  .pill:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+  /* ---- 議論 ---- */
+  .lead{
+    font-size:.95rem; line-height:1.9; margin:0;
+    padding-left:14px; border-left:3px solid var(--accent);
+  }
+  .counts{display:flex; gap:14px; flex-wrap:wrap; font-family:var(--mono); font-size:.78rem; color:var(--ink-3);}
+
+  details.deb{
+    background:var(--surface); border:1px solid var(--line);
+    border-left:3px solid var(--line-2); border-radius:8px; overflow:hidden;
+  }
+  details.deb + details.deb{margin-top:8px;}
+  details.deb.a-BUY{border-left-color:var(--up);}
+  details.deb.a-SELL{border-left-color:var(--down);}
+  details.deb.a-HOLD{border-left-color:var(--line-2);}
+  details.deb > summary{
+    cursor:pointer; list-style:none; padding:12px 14px;
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  details.deb > summary::-webkit-details-marker{display:none;}
+  details.deb > summary:focus-visible{outline:2px solid var(--accent); outline-offset:-2px;}
+  .deb-tk{font-family:var(--mono); font-weight:600; font-size:.95rem;}
+  .deb-views{display:flex; gap:5px; margin-left:auto; flex-wrap:wrap;}
+  .mini{
+    font-family:var(--mono); font-size:.66rem; font-weight:600;
+    padding:1px 5px; border-radius:3px; border:1px solid currentColor;
+  }
+  .m-fundamental{color:var(--a-fund);} .m-technical{color:var(--a-tech);}
+  .m-macro{color:var(--a-macro);} .m-risk{color:var(--a-risk);}
+
+  .deb-body{padding:0 14px 14px; display:flex; flex-direction:column; gap:14px;}
+  .ruling{background:var(--surface-2); border-radius:8px; padding:13px 14px; display:flex; flex-direction:column; gap:8px;}
+  .who{
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--disp); font-size:.78rem; font-weight:700; letter-spacing:.08em;
+  }
+  .who .dot{width:7px; height:7px; border-radius:99px; background:currentColor; flex:none;}
+  .who .conf{margin-left:auto; font-family:var(--mono); font-size:.72rem; font-weight:400; color:var(--ink-3); letter-spacing:0;}
+  .thesis{font-size:.85rem; line-height:1.85; margin:0; color:var(--ink-2);}
+  .falsi{
+    background:var(--inset); border-radius:6px; padding:9px 11px;
+    font-size:.78rem; line-height:1.7; color:var(--ink-2);
+  }
+  .falsi b{
+    display:block; font-family:var(--mono); font-size:.64rem; letter-spacing:.12em;
+    color:var(--ink-3); margin-bottom:3px;
+  }
+  .views-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(248px,1fr)); gap:10px;}
+  .view{border:1px solid var(--line); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:8px;}
+  .view.v-fundamental{color:var(--a-fund);} .view.v-technical{color:var(--a-tech);}
+  .view.v-macro{color:var(--a-macro);} .view.v-risk{color:var(--a-risk);}
+  .view .thesis,.view .falsi{color:var(--ink-2);}
+  .capline{
+    display:flex; gap:10px; align-items:baseline; font-size:.8rem; color:var(--ink-2);
+    border-top:1px dashed var(--line); padding-top:11px;
+  }
+  .capline .lab{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; color:var(--a-risk); white-space:nowrap;}
+
+  /* ---- 銘柄 ---- */
+  .tkgrid{display:flex; flex-wrap:wrap; gap:6px;}
+  .facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden;}
+  .fact{background:var(--surface); padding:10px 12px;}
+  .fact dt{font-size:.68rem; letter-spacing:.08em; color:var(--ink-3); margin:0;}
+  .fact dd{margin:2px 0 0; font-family:var(--mono); font-size:.95rem;}
+  .tl{display:flex; flex-direction:column; gap:10px;}
+  .tl-item{display:grid; grid-template-columns:auto 1fr; gap:12px;}
+  .tl-date{font-family:var(--mono); font-size:.72rem; color:var(--ink-3); padding-top:3px; white-space:nowrap;}
+  .tl-card{border-left:2px solid currentColor; padding-left:12px; display:flex; flex-direction:column; gap:6px;}
+
+  .empty{
+    border:1px dashed var(--line-2); border-radius:8px; padding:22px 16px;
+    text-align:center; color:var(--ink-3); font-size:.84rem;
+  }
+  .banner{
+    border:1px solid color-mix(in srgb, var(--warn) 45%, transparent);
+    background:color-mix(in srgb, var(--warn) 10%, transparent);
+    color:var(--ink-2); border-radius:8px; padding:11px 14px; font-size:.82rem;
+  }
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <h1>AI投資委員会</h1>
+      <span class="as-of" id="asOf"></span>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab" id="tab-home"   role="tab" aria-selected="true"  data-view="home">成績</button>
+      <button class="tab" id="tab-debate" role="tab" aria-selected="false" data-view="debate">議論</button>
+      <button class="tab" id="tab-ticker" role="tab" aria-selected="false" data-view="ticker">銘柄</button>
+      <button class="tab" id="tab-score"  role="tab" aria-selected="false" data-view="score">通信簿</button>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div id="view-home"   class="stack"></div>
+  <div id="view-debate" class="stack" hidden></div>
+  <div id="view-ticker" class="stack" hidden></div>
+  <div id="view-score"  class="stack" hidden></div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  // 初回描画用の種データ。公開した時点の成績なので、
+  // データベースが読めたら必ず上書きする。
+  const SEED = {"updated": "2026-10-22", "as_of": "2026-10-21", "primary_run": "r1", "runs": [{"initial_cash": 100000.0, "equity": {"days": ["2026-09-11", "2026-09-14", "2026-09-15", "2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-23", "2026-09-25", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19", "2026-10-20", "2026-10-21"], "accounts": [{"key": "ai", "label": "AI委員会", "values": [100000.0, 99447.24, 100090.16, 99403.69, 99535.36, 99361.52, 99919.15, 99961.53, 100529.6, 100375.15, 100254.32, 99709.98, 99738.09, 99638.11, 99643.02, 100062.77, 100188.38, 100247.94, 100461.53, 101467.02, 101505.51, 101698.62, 101840.24, 101689.39, 102177.36, 102289.99]}, {"key": "random", "label": "ランダム売買", "values": [100000.0, 99187.3, 99119.31, 98771.46, 98711.24, 99159.46, 99757.97, 100072.45, 99338.08, 98063.57, 97602.32, 97430.29, 97349.64, 98237.69, 98832.87, 98998.61, 98655.8, 98773.93, 99634.12, 99903.35, 99311.16, 99787.98, 99167.19, 99914.08, 100088.28, 100534.3]}, {"key": "spy_hold", "label": "SPY買い持ち", "values": [100000.0, 100247.69, 99787.88, 99347.82, 100474.31, 100603.62, 102163.48, 101411.94, 101879.5, 101121.37, 100935.14, 100727.77, 100907.4, 101653.65, 102339.14, 102901.8, 102654.81, 102220.27, 102833.12, 102759.16, 101648.36, 101937.62, 100809.66, 101236.28, 101575.72, 102109.33]}, {"key": "equal_hold", "label": "等金額買い持ち", "values": [100000.0, 99854.52, 99359.75, 98524.07, 99318.16, 99136.52, 100535.52, 99681.33, 100300.71, 99397.66, 99169.02, 98365.29, 98103.36, 98714.1, 99345.27, 100108.21, 99985.17, 99919.36, 100643.58, 101012.56, 100837.85, 101493.13, 100963.34, 101175.59, 101685.55, 101901.66]}]}, "totals": {"ai": 102289.99, "random": 100534.3, "spy_hold": 102109.33, "equal_hold": 101901.66}, "account": {"cash": 31859.3, "holdings_value": 70430.69, "total_equity": 102289.99, "return_pct": 0.0229}, "positions": [{"ticker": "LLY", "sector": "Healthcare", "shares": 13.0, "avg_cost": 1174.4123, "price": 1270.75, "value": 16519.75, "unrealized": 1252.39, "return_pct": 0.082, "weight": 0.1615}, {"ticker": "CVX", "sector": "Energy", "shares": 59.0, "avg_cost": 218.2185, "price": 226.78, "value": 13380.02, "unrealized": 505.13, "return_pct": 0.0392, "weight": 0.1308}, {"ticker": "MA", "sector": "Financials", "shares": 20.0, "avg_cost": 572.0648, "price": 622.62, "value": 12452.4, "unrealized": 1011.1, "return_pct": 0.0884, "weight": 0.1217}, {"ticker": "COST", "sector": "Consumer", "shares": 8.0, "avg_cost": 991.5668, "price": 998.31, "value": 7986.48, "unrealized": 53.95, "return_pct": 0.0068, "weight": 0.0781}, {"ticker": "NVDA", "sector": "Technology", "shares": 35.0, "avg_cost": 234.7631, "price": 221.97, "value": 7768.95, "unrealized": -447.76, "return_pct": -0.0545, "weight": 0.076}, {"ticker": "XOM", "sector": "Energy", "shares": 41.0, "avg_cost": 166.2761, "price": 178.09, "value": 7301.69, "unrealized": 484.37, "return_pct": 0.071, "weight": 0.0714}, {"ticker": "GOOGL", "sector": "Technology", "shares": 15.0, "avg_cost": 346.6012, "price": 334.76, "value": 5021.4, "unrealized": -177.62, "return_pct": -0.0342, "weight": 0.0491}], "pending_orders": [{"ticker": "GOOGL", "side": "SELL", "shares": 15, "created_date": "2026-10-21", "confidence": 0.55}, {"ticker": "NVDA", "side": "BUY", "shares": 11, "created_date": "2026-10-21", "confidence": 0.56}, {"ticker": "PFE", "side": "BUY", "shares": 85, "created_date": "2026-10-21", "confidence": 0.5}], "trades": [{"date": "2026-10-21", "ticker": "COST", "side": "BUY", "shares": 2.0, "price": 991.4955, "value": 1982.99}, {"date": "2026-10-21", "ticker": "MA", "side": "BUY", "shares": 2.0, "price": 620.7102, "value": 1241.42}, {"date": "2026-10-21", "ticker": "META", "side": "SELL", "shares": 6.0, "price": 697.3961, "value": 4184.38}, {"date": "2026-10-20", "ticker": "GOOGL", "side": "BUY", "shares": 6.0, "price": 343.8218, "value": 2062.93}, {"date": "2026-10-20", "ticker": "COST", "side": "BUY", "shares": 3.0, "price": 1000.1999, "value": 3000.6}, {"date": "2026-10-20", "ticker": "META", "side": "SELL", "shares": 3.0, "price": 694.6325, "value": 2083.9}, {"date": "2026-10-20", "ticker": "NVDA", "side": "SELL", "shares": 10.0, "price": 215.872, "value": 2158.72}, {"date": "2026-10-16", "ticker": "COST", "side": "BUY", "shares": 3.0, "price": 982.9812, "value": 2948.94}, {"date": "2026-10-16", "ticker": "GOOGL", "side": "BUY", "shares": 9.0, "price": 348.4541, "value": 3136.09}, {"date": "2026-10-16", "ticker": "NVDA", "side": "SELL", "shares": 10.0, "price": 216.4517, "value": 2164.52}, {"date": "2026-10-16", "ticker": "XOM", "side": "BUY", "shares": 7.0, "price": 176.5783, "value": 1236.05}, {"date": "2026-10-15", "ticker": "XOM", "side": "SELL", "shares": 9.0, "price": 178.5407, "value": 1606.87}, {"date": "2026-10-15", "ticker": "CVX", "side": "BUY", "shares": 8.0, "price": 222.9314, "value": 1783.45}, {"date": "2026-10-15", "ticker": "LLY", "side": "BUY", "shares": 3.0, "price": 1235.6576, "value": 3706.97}, {"date": "2026-10-15", "ticker": "NVDA", "side": "SELL", "shares": 9.0, "price": 215.2323, "value": 1937.09}, {"date": "2026-10-14", "ticker": "NVDA", "side": "BUY", "shares": 6.0, "price": 225.7178, "value": 1354.31}, {"date": "2026-10-14", "ticker": "AMD", "side": "SELL", "shares": 5.0, "price": 589.3577, "value": 2946.79}, {"date": "2026-10-14", "ticker": "CVX", "side": "BUY", "shares": 10.0, "price": 218.9994, "value": 2189.99}, {"date": "2026-10-14", "ticker": "XOM", "side": "SELL", "shares": 21.0, "price": 174.9775, "value": 3674.53}, {"date": "2026-10-14", "ticker": "LLY", "side": "SELL", "shares": 4.0, "price": 1177.2811, "value": 4709.12}, {"date": "2026-10-09", "ticker": "PFE", "side": "SELL", "shares": 145.0, "price": 27.5962, "value": 4001.45}, {"date": "2026-10-09", "ticker": "MA", "side": "BUY", "shares": 3.0, "price": 574.397, "value": 1723.19}, {"date": "2026-10-09", "ticker": "NVDA", "side": "BUY", "shares": 16.0, "price": 233.9569, "value": 3743.31}, {"date": "2026-10-08", "ticker": "AMD", "side": "SELL", "shares": 2.0, "price": 639.0403, "value": 1278.08}, {"date": "2026-10-08", "ticker": "LLY", "side": "BUY", "shares": 2.0, "price": 1184.0918, "value": 2368.18}, {"date": "2026-10-08", "ticker": "NVDA", "side": "BUY", "shares": 22.0, "price": 235.0475, "value": 5171.04}, {"date": "2026-10-08", "ticker": "XOM", "side": "SELL", "shares": 11.0, "price": 167.0264, "value": 1837.29}, {"date": "2026-10-08", "ticker": "CVX", "side": "SELL", "shares": 19.0, "price": 209.2153, "value": 3975.09}, {"date": "2026-10-07", "ticker": "NVDA", "side": "BUY", "shares": 20.0, "price": 237.8088, "value": 4756.18}, {"date": "2026-10-07", "ticker": "MA", "side": "BUY", "shares": 5.0, "price": 567.7737, "value": 2838.87}, {"date": "2026-10-06", "ticker": "MA", "side": "BUY", "shares": 10.0, "price": 563.7817, "value": 5637.82}, {"date": "2026-10-06", "ticker": "PFE", "side": "SELL", "shares": 169.0, "price": 27.4663, "value": 4641.8}, {"date": "2026-10-06", "ticker": "LLY", "side": "BUY", "shares": 2.0, "price": 1147.7236, "value": 2295.45}, {"date": "2026-10-06", "ticker": "XOM", "side": "BUY", "shares": 8.0, "price": 163.1415, "value": 1305.13}, {"date": "2026-10-05", "ticker": "LLY", "side": "SELL", "shares": 3.0, "price": 1150.1846, "value": 3450.55}, {"date": "2026-10-05", "ticker": "MA", "side": "SELL", "shares": 5.0, "price": 551.764, "value": 2758.82}, {"date": "2026-10-05", "ticker": "AMD", "side": "BUY", "shares": 3.0, "price": 630.6552, "value": 1891.97}, {"date": "2026-10-01", "ticker": "AAPL", "side": "SELL", "shares": 11.0, "price": 330.0049, "value": 3630.05}, {"date": "2026-10-01", "ticker": "MA", "side": "SELL", "shares": 7.0, "price": 550.7245, "value": 3855.07}, {"date": "2026-10-01", "ticker": "XOM", "side": "BUY", "shares": 22.0, "price": 161.5807, "value": 3554.78}, {"date": "2026-09-30", "ticker": "META", "side": "BUY", "shares": 3.0, "price": 729.3645, "value": 2188.09}, {"date": "2026-09-30", "ticker": "AMD", "side": "SELL", "shares": 3.0, "price": 609.0254, "value": 1827.08}, {"date": "2026-09-30", "ticker": "PFE", "side": "SELL", "shares": 87.0, "price": 28.7756, "value": 2503.48}, {"date": "2026-09-30", "ticker": "LLY", "side": "BUY", "shares": 1.0, "price": 1187.0832, "value": 1187.08}, {"date": "2026-09-29", "ticker": "AAPL", "side": "BUY", "shares": 11.0, "price": 337.1385, "value": 3708.52}, {"date": "2026-09-29", "ticker": "PFE", "side": "BUY", "shares": 86.0, "price": 28.6143, "value": 2460.83}, {"date": "2026-09-29", "ticker": "XOM", "side": "BUY", "shares": 11.0, "price": 160.3001, "value": 1763.3}, {"date": "2026-09-29", "ticker": "MA", "side": "BUY", "shares": 6.0, "price": 564.282, "value": 3385.69}, {"date": "2026-09-28", "ticker": "PFE", "side": "BUY", "shares": 181.0, "price": 28.6343, "value": 5182.81}, {"date": "2026-09-28", "ticker": "LLY", "side": "BUY", "shares": 1.0, "price": 1180.8902, "value": 1180.89}, {"date": "2026-09-28", "ticker": "META", "side": "SELL", "shares": 2.0, "price": 749.665, "value": 1499.33}, {"date": "2026-09-24", "ticker": "PFE", "side": "BUY", "shares": 134.0, "price": 28.2141, "value": 3780.69}, {"date": "2026-09-24", "ticker": "LLY", "side": "BUY", "shares": 1.0, "price": 1157.2484, "value": 1157.25}, {"date": "2026-09-24", "ticker": "MA", "side": "SELL", "shares": 4.0, "price": 560.7195, "value": 2242.88}, {"date": "2026-09-24", "ticker": "XOM", "side": "SELL", "shares": 11.0, "price": 162.9785, "value": 1792.76}, {"date": "2026-09-21", "ticker": "MA", "side": "BUY", "shares": 10.0, "price": 567.3935, "value": 5673.94}, {"date": "2026-09-21", "ticker": "LLY", "side": "BUY", "shares": 3.0, "price": 1145.0722, "value": 3435.22}, {"date": "2026-09-18", "ticker": "AMD", "side": "BUY", "shares": 7.0, "price": 547.6437, "value": 3833.51}, {"date": "2026-09-18", "ticker": "LLY", "side": "BUY", "shares": 1.0, "price": 1150.575, "value": 1150.58}, {"date": "2026-09-18", "ticker": "XOM", "side": "SELL", "shares": 24.0, "price": 162.4188, "value": 3898.05}, {"date": "2026-09-17", "ticker": "LLY", "side": "BUY", "shares": 3.0, "price": 1150.8452, "value": 3452.54}, {"date": "2026-09-17", "ticker": "XOM", "side": "BUY", "shares": 9.0, "price": 161.9109, "value": 1457.2}, {"date": "2026-09-16", "ticker": "LLY", "side": "BUY", "shares": 3.0, "price": 1137.8787, "value": 3413.64}, {"date": "2026-09-16", "ticker": "AVGO", "side": "SELL", "shares": 7.0, "price": 342.5486, "value": 2397.84}, {"date": "2026-09-15", "ticker": "XOM", "side": "BUY", "shares": 12.0, "price": 165.4427, "value": 1985.31}, {"date": "2026-09-15", "ticker": "META", "side": "BUY", "shares": 8.0, "price": 659.6296, "value": 5277.04}, {"date": "2026-09-15", "ticker": "AVGO", "side": "SELL", "shares": 9.0, "price": 345.847, "value": 3112.62}, {"date": "2026-09-14", "ticker": "AVGO", "side": "BUY", "shares": 16.0, "price": 349.6347, "value": 5594.16}, {"date": "2026-09-14", "ticker": "XOM", "side": "BUY", "shares": 48.0, "price": 168.7843, "value": 8101.65}, {"date": "2026-09-14", "ticker": "CVX", "side": "BUY", "shares": 60.0, "price": 217.1085, "value": 13026.51}], "id": "r1", "label": "最初の運用", "start_date": "2026-09-11", "status": "active", "is_primary": true}], "initial_cash": 100000.0, "equity": {"days": ["2026-09-11", "2026-09-14", "2026-09-15", "2026-09-16", "2026-09-17", "2026-09-18", "2026-09-21", "2026-09-23", "2026-09-25", "2026-09-28", "2026-09-29", "2026-09-30", "2026-10-01", "2026-10-02", "2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09", "2026-10-13", "2026-10-14", "2026-10-15", "2026-10-16", "2026-10-19", "2026-10-20", "2026-10-21"], "accounts": [{"key": "ai", "label": "AI委員会", "values": [100000.0, 99447.24, 100090.16, 99403.69, 99535.36, 99361.52, 99919.15, 99961.53, 100529.6, 100375.15, 100254.32, 99709.98, 99738.09, 99638.11, 99643.02, 100062.77, 100188.38, 100247.94, 100461.53, 101467.02, 101505.51, 101698.62, 101840.24, 101689.39, 102177.36, 102289.99]}, {"key": "random", "label": "ランダム売買", "values": [100000.0, 99187.3, 99119.31, 98771.46, 98711.24, 99159.46, 99757.97, 100072.45, 99338.08, 98063.57, 97602.32, 97430.29, 97349.64, 98237.69, 98832.87, 98998.61, 98655.8, 98773.93, 99634.12, 99903.35, 99311.16, 99787.98, 99167.19, 99914.08, 100088.28, 100534.3]}, {"key": "spy_hold", "label": "SPY買い持ち", "values": [100000.0, 100247.69, 99787.88, 99347.82, 100474.31, 100603.62, 102163.48, 101411.94, 101879.5, 101121.37, 100935.14, 100727.77, 100907.4, 101653.65, 102339.14, 102901.8, 102654.81, 102220.27, 102833.12, 102759.16, 101648.36, 101937.62, 100809.66, 101236.28, 101575.72, 102109.33]}, {"key": "equal_hold", "label": "等金額買い持ち", "values": [100000.0, 99854.52, 99359.75, 98524.07, 99318.16, 99136.52, 100535.52, 99681.33, 100300.71, 99397.66, 99169.02, 98365.29, 98103.36, 98714.1, 99345.27, 100108.21, 99985.17, 99919.36, 100643.58, 101012.56, 100837.85, 101493.13, 100963.34, 101175.59, 101685.55, 101901.66]}]}, "totals": {"ai": 102289.99, "random": 100534.3, "spy_hold": 102109.33, "equal_hold": 101901.66}, "account": {"cash": 31859.3, "holdings_value": 70430.69, "total_equity": 102289.99, "return_pct": 0.0229}, "positions": [{"ticker": "LLY", "sector": "Healthcare", "shares": 13.0, "avg_cost": 1174.4123, "price": 1270.75, "value": 16519.75, "unrealized": 1252.39, "return_pct": 0.082, "weight": 0.1615}, {"ticker": "CVX", "sector": "Energy", "shares": 59.0, "avg_cost": 218.2185, "price": 226.78, "value": 13380.02, "unrealized": 505.13, "return_pct": 0.0392, "weight": 0.1308}, {"ticker": "MA", "sector": "Financials", "shares": 20.0, "avg_cost": 572.0648, "price": 622.62, "value": 12452.4, "unrealized": 1011.1, "return_pct": 0.0884, "weight": 0.1217}, {"ticker": "COST", "sector": "Consumer", "shares": 8.0, "avg_cost": 991.5668, "price": 998.31, "value": 7986.48, "unrealized": 53.95, "return_pct": 0.0068, "weight": 0.0781}, {"ticker": "NVDA", "sector": "Technology", "shares": 35.0, "avg_cost": 234.7631, "price": 221.97, "value": 7768.95, "unrealized": -447.76, "return_pct": -0.0545, "weight": 0.076}, {"ticker": "XOM", "sector": "Energy", "shares": 41.0, "avg_cost": 166.2761, "price": 178.09, "value": 7301.69, "unrealized": 484.37, "return_pct": 0.071, "weight": 0.0714}, {"ticker": "GOOGL", "sector": "Technology", "shares": 15.0, "avg_cost": 346.6012, "price": 334.76, "value": 5021.4, "unrealized": -177.62, "return_pct": -0.0342, "weight": 0.0491}], "pending_orders": [{"ticker": "GOOGL", "side": "SELL", "shares": 15, "created_date": "2026-10-21", "confidence": 0.55}, {"ticker": "NVDA", "side": "BUY", "shares": 11, "created_date": "2026-10-21", "confidence": 0.56}, {"ticker": "PFE", "side": "BUY", "shares": 85, "created_date": "2026-10-21", "confidence": 0.5}], "trades": [{"date": "2026-10-21", "ticker": "COST", "side": "BUY", "shares": 2.0, "price": 991.4955, "value": 1982.99}, {"date": "2026-10-21", "ticker": "MA", "side": "BUY", "shares": 2.0, "price": 620.7102, "value": 1241.42}, {"date": "2026-10-21", "ticker": "META", "side": "SELL", "shares": 6.0, "price": 697.3961, "value": 4184.38}, {"date": "2026-10-20", "ticker": "GOOGL", "side": "BUY", "shares": 6.0, "price": 343.8218, "value": 2062.93}, {"date": "2026-10-20", "ticker": "COST", "side": "BUY", "shares": 3.0, "price": 1000.1999, "value": 3000.6}, {"date": "2026-10-20", "ticker": "META", "side": "SELL", "shares": 3.0, "price": 694.6325, "value": 2083.9}, {"date": "2026-10-20", "ticker": "NVDA", "side": "SELL", "shares": 10.0, "price": 215.872, "value": 2158.72}, {"date": "2026-10-16", "ticker": "COST", "side": "BUY", "shares": 3.0, "price": 982.9812, "value": 2948.94}, {"date": "2026-10-16", "ticker": "GOOGL", "side": "BUY", "shares": 9.0, "price": 348.4541, "value": 3136.09}, {"date": "2026-10-16", "ticker": "NVDA", "side": "SELL", "shares": 10.0, "price": 216.4517, "value": 2164.52}, {"date": "2026-10-16", "ticker": "XOM", "side": "BUY", "shares": 7.0, "price": 176.5783, "value": 1236.05}, {"date": "2026-10-15", "ticker": "XOM", "side": "SELL", "shares": 9.0, "price": 178.5407, "value": 1606.87}, {"date": "2026-10-15", "ticker": "CVX", "side": "BUY", "shares": 8.0, "price": 222.9314, "value": 1783.45}, {"date": "2026-10-15", "ticker": "LLY", "side": "BUY", "shares": 3.0, "price": 1235.6576, "value": 3706.97}, {"date": "2026-10-15", "ticker": "NVDA", "side": "SELL", "shares": 9.0, "price": 215.2323, "value": 1937.09}, {"date": "2026-10-14", "ticker": "NVDA", "side": "BUY", "shares": 6.0, "price": 225.7178, "value": 1354.31}, {"date": "2026-10-14", "ticker": "AMD", "side": "SELL", "shares": 5.0, "price": 589.3577, "value": 2946.79}, {"date": "2026-10-14", "ticker": "CVX", "side": "BUY", "shares": 10.0, "price": 218.9994, "value": 2189.99}, {"date": "2026-10-14", "ticker": "XOM", "side": "SELL", "shares": 21.0, "price": 174.9775, "value": 3674.53}, {"date": "2026-10-14", "ticker": "LLY", "side": "SELL", "shares": 4.0, "price": 1177.2811, "value": 4709.12}, {"date": "2026-10-09", "ticker": "PFE", "side": "SELL", "shares": 145.0, "price": 27.5962, "value": 4001.45}, {"date": "2026-10-09", "ticker": "MA", "side": "BUY", "shares": 3.0, "price": 574.397, "value": 1723.19}, {"date": "2026-10-09", "ticker": "NVDA", "side": "BUY", "shares": 16.0, "price": 233.9569, "value": 3743.31}, {"date": "2026-10-08", "ticker": "AMD", "side": "SELL", "shares": 2.0, "price": 639.0403, "value": 1278.08}, {"date": "2026-10-08", "ticker": "LLY", "side": "BUY", "shares": 2.0, "price": 1184.0918, "value": 2368.18}, {"date": "2026-10-08", "ticker": "NVDA", "side": "BUY", "shares": 22.0, "price": 235.0475, "value": 5171.04}, {"date": "2026-10-08", "ticker": "XOM", "side": "SELL", "shares": 11.0, "price": 167.0264, "value": 1837.29}, {"date": "2026-10-08", "ticker": "CVX", "side": "SELL", "shares": 19.0, "price": 209.2153, "value": 3975.09}, {"date": "2026-10-07", "ticker": "NVDA", "side": "BUY", "shares": 20.0, "price": 237.8088, "value": 4756.18}, {"date": "2026-10-07", "ticker": "MA", "side": "BUY", "shares": 5.0, "price": 567.7737, "value": 2838.87}, {"date": "2026-10-06", "ticker": "MA", "side": "BUY", "shares": 10.0, "price": 563.7817, "value": 5637.82}, {"date": "2026-10-06", "ticker": "PFE", "side": "SELL", "shares": 169.0, "price": 27.4663, "value": 4641.8}, {"date": "2026-10-06", "ticker": "LLY", "side": "BUY", "shares": 2.0, "price": 1147.7236, "value": 2295.45}, {"date": "2026-10-06", "ticker": "XOM", "side": "BUY", "shares": 8.0, "price": 163.1415, "value": 1305.13}, {"date": "2026-10-05", "ticker": "LLY", "side": "SELL", "shares": 3.0, "price": 1150.1846, "value": 3450.55}, {"date": "2026-10-05", "ticker": "MA", "side": "SELL", "shares": 5.0, "price": 551.764, "value": 2758.82}, {"date": "2026-10-05", "ticker": "AMD", "side": "BUY", "shares": 3.0, "price": 630.6552, "value": 1891.97}, {"date": "2026-10-01", "ticker": "AAPL", "side": "SELL", "shares": 11.0, "price": 330.0049, "value": 3630.05}, {"date": "2026-10-01", "ticker": "MA", "side": "SELL", "shares": 7.0, "price": 550.7245, "value": 3855.07}, {"date": "2026-10-01", "ticker": "XOM", "side": "BUY", "shares": 22.0, "price": 161.5807, "value": 3554.78}, {"date": "2026-09-30", "ticker": "META", "side": "BUY", "shares": 3.0, "price": 729.3645, "value": 2188.09}, {"date": "2026-09-30", "ticker": "AMD", "side": "SELL", "shares": 3.0, "price": 609.0254, "value": 1827.08}, {"date": "2026-09-30", "ticker": "PFE", "side": "SELL", "shares": 87.0, "price": 28.7756, "value": 2503.48}, {"date": "2026-09-30", "ticker": "LLY", "side": "BUY", "shares": 1.0, "price": 1187.0832, "value": 1187.08}, {"date": "2026-09-29", "ticker": "AAPL", "side": "BUY", "shares": 11.0, "price": 337.1385, "value": 3708.52}, {"date": "2026-09-29", "ticker": "PFE", "side": "BUY", "shares": 86.0, "price": 28.6143, "value": 2460.83}, {"date": "2026-09-29", "ticker": "XOM", "side": "BUY", "shares": 11.0, "price": 160.3001, "value": 1763.3}, {"date": "2026-09-29", "ticker": "MA", "side": "BUY", "shares": 6.0, "price": 564.282, "value": 3385.69}, {"date": "2026-09-28", "ticker": "PFE", "side": "BUY", "shares": 181.0, "price": 28.6343, "value": 5182.81}, {"date": "2026-09-28", "ticker": "LLY", "side": "BUY", "shares": 1.0, "price": 1180.8902, "value": 1180.89}, {"date": "2026-09-28", "ticker": "META", "side": "SELL", "shares": 2.0, "price": 749.665, "value": 1499.33}, {"date": "2026-09-24", "ticker": "PFE", "side": "BUY", "shares": 134.0, "price": 28.2141, "value": 3780.69}, {"date": "2026-09-24", "ticker": "LLY", "side": "BUY", "shares": 1.0, "price": 1157.2484, "value": 1157.25}, {"date": "2026-09-24", "ticker": "MA", "side": "SELL", "shares": 4.0, "price": 560.7195, "value": 2242.88}, {"date": "2026-09-24", "ticker": "XOM", "side": "SELL", "shares": 11.0, "price": 162.9785, "value": 1792.76}, {"date": "2026-09-21", "ticker": "MA", "side": "BUY", "shares": 10.0, "price": 567.3935, "value": 5673.94}, {"date": "2026-09-21", "ticker": "LLY", "side": "BUY", "shares": 3.0, "price": 1145.0722, "value": 3435.22}, {"date": "2026-09-18", "ticker": "AMD", "side": "BUY", "shares": 7.0, "price": 547.6437, "value": 3833.51}, {"date": "2026-09-18", "ticker": "LLY", "side": "BUY", "shares": 1.0, "price": 1150.575, "value": 1150.58}, {"date": "2026-09-18", "ticker": "XOM", "side": "SELL", "shares": 24.0, "price": 162.4188, "value": 3898.05}, {"date": "2026-09-17", "ticker": "LLY", "side": "BUY", "shares": 3.0, "price": 1150.8452, "value": 3452.54}, {"date": "2026-09-17", "ticker": "XOM", "side": "BUY", "shares": 9.0, "price": 161.9109, "value": 1457.2}, {"date": "2026-09-16", "ticker": "LLY", "side": "BUY", "shares": 3.0, "price": 1137.8787, "value": 3413.64}, {"date": "2026-09-16", "ticker": "AVGO", "side": "SELL", "shares": 7.0, "price": 342.5486, "value": 2397.84}, {"date": "2026-09-15", "ticker": "XOM", "side": "BUY", "shares": 12.0, "price": 165.4427, "value": 1985.31}, {"date": "2026-09-15", "ticker": "META", "side": "BUY", "shares": 8.0, "price": 659.6296, "value": 5277.04}, {"date": "2026-09-15", "ticker": "AVGO", "side": "SELL", "shares": 9.0, "price": 345.847, "value": 3112.62}, {"date": "2026-09-14", "ticker": "AVGO", "side": "BUY", "shares": 16.0, "price": 349.6347, "value": 5594.16}, {"date": "2026-09-14", "ticker": "XOM", "side": "BUY", "shares": 48.0, "price": 168.7843, "value": 8101.65}, {"date": "2026-09-14", "ticker": "CVX", "side": "BUY", "shares": 60.0, "price": 217.1085, "value": 13026.51}], "days": ["2026-10-21", "2026-10-20", "2026-10-19", "2026-10-15", "2026-10-14", "2026-10-13", "2026-10-08", "2026-10-07", "2026-10-06", "2026-10-05", "2026-10-02", "2026-09-30", "2026-09-29", "2026-09-28", "2026-09-25", "2026-09-23", "2026-09-18", "2026-09-17", "2026-09-16", "2026-09-15", "2026-09-14", "2026-09-11"], "tickers": ["AAPL", "AMD", "AVGO", "BA", "CAT", "COST", "CVX", "GOOGL", "GS", "JPM", "LLY", "MA", "MCD", "META", "NFLX", "NKE", "NVDA", "PFE", "TSLA", "UNH", "V", "WMT", "XOM"], "scorecard": [{"source": "chair", "label": "議長", "n": 14, "accuracy": 0.429, "avg_stated_confidence": 0.55, "calibration_gap": 0.121, "avg_residual_on_directional": -0.0355, "reliable": false}, {"source": "technical", "label": "テクニカル", "n": 52, "accuracy": 0.577, "avg_stated_confidence": 0.571, "calibration_gap": -0.006, "avg_residual_on_directional": -0.0083, "reliable": true}, {"source": "macro", "label": "マクロ", "n": 2, "accuracy": 0.0, "avg_stated_confidence": 0.5, "calibration_gap": 0.5, "avg_residual_on_directional": -0.0253, "reliable": false}], "scorecard_note": "n が 30 未満の成績は統計的にほぼ無意味。個別株の残差リターンはノイズが大きく、少ないサンプルの的中率で「誰が優秀か」を判断してはいけない。calibration_gap(申告した確信度 − 実際の的中率)が正なら自信過剰。", "calibration": [{"range": "0.0-0.5", "n": 2, "stated_confidence": 0.45, "actual_accuracy": 0.5, "gap": -0.05}, {"range": "0.5-0.6", "n": 42, "stated_confidence": 0.535, "actual_accuracy": 0.524, "gap": 0.011}, {"range": "0.6-0.7", "n": 22, "stated_confidence": 0.62, "actual_accuracy": 0.545, "gap": 0.075}, {"range": "0.7-0.8", "n": 2, "stated_confidence": 0.7, "actual_accuracy": 0.5, "gap": 0.2}], "predictions": {"recorded": 705, "scored": 68, "awaiting": 637, "scorecard": {"chair": {"n": 14, "accuracy": 0.429, "avg_stated_confidence": 0.55, "calibration_gap": 0.121, "avg_residual_on_directional": -0.0355, "reliable": false}, "technical": {"n": 52, "accuracy": 0.577, "avg_stated_confidence": 0.571, "calibration_gap": -0.006, "avg_residual_on_directional": -0.0083, "reliable": true}, "macro": {"n": 2, "accuracy": 0.0, "avg_stated_confidence": 0.5, "calibration_gap": 0.5, "avg_residual_on_directional": -0.0253, "reliable": false}, "_note": "n が 30 未満の成績は統計的にほぼ無意味。個別株の残差リターンはノイズが大きく、少ないサンプルの的中率で「誰が優秀か」を判断してはいけない。calibration_gap(申告した確信度 − 実際の的中率)が正なら自信過剰。"}, "calibration": [{"range": "0.0-0.5", "n": 2, "stated_confidence": 0.45, "actual_accuracy": 0.5, "gap": -0.05}, {"range": "0.5-0.6", "n": 42, "stated_confidence": 0.535, "actual_accuracy": 0.524, "gap": 0.011}, {"range": "0.6-0.7", "n": 22, "stated_confidence": 0.62, "actual_accuracy": 0.545, "gap": 0.075}, {"range": "0.7-0.8", "n": 2, "stated_confidence": 0.7, "actual_accuracy": 0.5, "gap": 0.2}]}, "rules": {"max_position_pct": 0.2, "min_cash_pct": 0.1, "max_trades_per_day": 5, "slippage_pct": 0.0005, "scoring_horizon_days": 20}};
+
+  const ACCOUNT_COLOR = {
+    ai:"--accent", random:"--flat", spy_hold:"--down", equal_hold:"--up"
+  };
+  const SOURCE_COLOR = {
+    chair:"--a-chair", fundamental:"--a-fund", technical:"--a-tech",
+    macro:"--a-macro", risk:"--a-risk"
+  };
+
+  const state = {
+    summary: SEED,
+    days: Object.create(null),     // 日付 -> 議論
+    tickers: Object.create(null),  // 銘柄 -> 履歴
+    view: "home",
+    day: null,
+    ticker: null,
+    run: null,        // 見ているラウンド。null なら主ラウンド
+    pctMode: false,   // 資産推移を % で見るか($ で見るか)
+    live: null,       // 場中の現在値。取れていなければ null
+    offline: false
+  };
+  let db = null;
+  const charts = Object.create(null);
+
+  /* ------------------------------------------------------- 小さな道具 */
+
+  const $ = (id) => document.getElementById(id);
+
+  function esc(v){
+    return String(v == null ? "" : v)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;");
+  }
+  function usd(n, digits){
+    if (n == null || isNaN(n)) return "—";
+    return "$" + Number(n).toLocaleString("en-US", {
+      minimumFractionDigits: digits == null ? 2 : digits,
+      maximumFractionDigits: digits == null ? 2 : digits
+    });
+  }
+  function pct(n, digits){
+    if (n == null || isNaN(n)) return "—";
+    return (Number(n) * 100).toFixed(digits == null ? 2 : digits) + "%";
+  }
+  function signed(n, digits){
+    if (n == null || isNaN(n)) return "—";
+    const s = (Number(n) * 100).toFixed(digits == null ? 2 : digits) + "%";
+    return Number(n) > 0 ? "+" + s : s;
+  }
+  function tone(n){
+    if (n == null || isNaN(n) || Number(n) === 0) return "flat";
+    return Number(n) > 0 ? "pos" : "neg";
+  }
+  function cssVar(name){
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  // 現在値を取った時刻。見る人の端末の時計に合わせて出す。
+  function clock(iso){
+    if (!iso) return "";
+    const d = new Date(iso);
+    if (isNaN(d)) return "";
+    return d.toLocaleTimeString("ja-JP", { hour: "2-digit", minute: "2-digit" });
+  }
+  function jpDate(iso){
+    if (!iso) return "";
+    const p = String(iso).split("-");
+    return p.length === 3 ? Number(p[1]) + "/" + Number(p[2]) : iso;
+  }
+
+  /* --------------------------------------------------------- グラフ */
+
+  function drawChart(key, canvasId, config){
+    const el = $(canvasId);
+    if (!el || typeof Chart === "undefined") return;
+    if (charts[key]) charts[key].destroy();
+    charts[key] = new Chart(el, config);
+  }
+
+  function axisOptions(yFormat){
+    const grid = cssVar("--line");
+    const label = cssVar("--ink-3");
+    return {
+      responsive:true, maintainAspectRatio:false,
+      interaction:{ mode:"index", intersect:false },
+      scales:{
+        x:{ grid:{ color:grid, drawTicks:false },
+            ticks:{ color:label, maxTicksLimit:7, font:{ family:"IBM Plex Mono", size:10 } },
+            border:{ color:grid } },
+        y:{ grid:{ color:grid, drawTicks:false },
+            ticks:{ color:label, maxTicksLimit:6, font:{ family:"IBM Plex Mono", size:10 },
+                    callback:yFormat },
+            border:{ display:false } }
+      }
+    };
+  }
+
+  /* ---------------------------------------------------- 成績(ホーム) */
+
+  /** いま見ているラウンドの口座まわり。
+   *  ラウンドが無い古いデータでも壊れないよう、無ければ summary 自体を返す。 */
+  function runView(){
+    const s = state.summary;
+    const runs = s.runs || [];
+    if (!runs.length) return applyLive(s);
+    let found = null;
+    for (let i = 0; i < runs.length; i++){
+      if (runs[i].id === state.run) found = runs[i];
+    }
+    if (!found){
+      for (let i = 0; i < runs.length; i++){
+        if (runs[i].is_primary) found = runs[i];
+      }
+    }
+    return applyLive(found || runs[0]);
+  }
+
+  // 場中の現在値を、終値ベースの数字に上書きする。
+  // 台帳そのものは終値で動いている(そうしないとカンニングになる)ので、
+  // ここで差し替えるのは「いま売ったらいくらか」の表示だけ。
+  function applyLive(r){
+    const live = state.live;
+    if (!live || !live.runs) return r;
+    // 台帳が先に進んでいたら古い現在値なので使わない
+    if (live.as_of_close !== state.summary.as_of) return r;
+
+    const rid = r.id || state.summary.primary_run;
+    const block = live.runs[rid];
+    if (!block) return r;
+
+    const out = Object.assign({}, r);
+    const totals = Object.assign({}, r.totals);
+    Object.keys(block).forEach(function(key){
+      if (block[key] && block[key].total_equity != null){
+        totals[key] = block[key].total_equity;
+      }
+    });
+    out.totals = totals;
+
+    const ai = block.ai;
+    if (ai){
+      out.account = Object.assign({}, r.account, {
+        total_equity: ai.total_equity,
+        cash: ai.cash,
+        holdings_value: ai.total_equity - ai.cash,
+        return_pct: ai.return_pct
+      });
+      out.positions = (r.positions || []).map(function(p){
+        const q = live.quotes && live.quotes[p.ticker];
+        const held = ai.positions && ai.positions[p.ticker];
+        if (!q || !held) return p;
+        return Object.assign({}, p, {
+          price: q.price,
+          value: held.value,
+          return_pct: p.avg_cost ? (q.price / p.avg_cost - 1) : p.return_pct,
+          weight: ai.total_equity ? held.value / ai.total_equity : p.weight
+        });
+      });
+    }
+    out.liveAt = live.at;
+    return out;
+  }
+
+  function renderHome(){
+    const s = state.summary;
+    const r = runView();
+    const acc = r.account || {};
+    const ret = acc.return_pct;
+    const totals = r.totals || {};
+    const eq = r.equity || { days:[], accounts:[] };
+    const initial = r.initial_cash || 100000;
+
+    const rows = (eq.accounts || []).map(function(a){
+      const total = totals[a.key];
+      const diff = (total != null && totals.ai != null)
+        ? (totals.ai - total) / initial : null;
+      const isMe = a.key === "ai";
+      return '<div class="bl-row' + (isMe ? " me" : "") + '">' +
+        '<span class="bl-name"><i class="swatch" style="background:' +
+          cssVar(ACCOUNT_COLOR[a.key] || "--flat") + '"></i><b>' + esc(a.label) + '</b></span>' +
+        '<span class="bl-total">' + usd(total) + '</span>' +
+        (isMe
+          ? '<span class="bl-diff ' + tone(ret) + '">' + signed(ret) + '</span>'
+          : '<span class="bl-diff ' + tone(diff) + '">' + signed(diff) + '</span>') +
+      '</div>';
+    }).join("");
+
+    const posRows = (r.positions || []).map(function(p){
+      const cap = (s.rules && s.rules.max_position_pct) || 0.2;
+      return '<tr>' +
+        '<td><span class="tk">' + esc(p.ticker) + '</span><br><span class="sector">' + esc(p.sector) + '</span></td>' +
+        '<td class="num">' + Number(p.shares).toLocaleString() + '</td>' +
+        '<td class="num">' + usd(p.avg_cost) + '</td>' +
+        '<td class="num">' + usd(p.price) + '</td>' +
+        '<td class="num ' + tone(p.return_pct) + '">' + signed(p.return_pct, 1) + '</td>' +
+        '<td class="num">' + usd(p.value, 0) + '</td>' +
+        '<td style="min-width:110px"><div class="wbar" title="上限 ' + pct(cap,0) + '">' +
+          '<i style="width:' + Math.min(100, (p.weight / cap) * 100).toFixed(1) + '%"></i>' +
+          '<u style="left:100%"></u></div>' +
+          '<span class="sector mono">' + pct(p.weight, 1) + '</span></td>' +
+      '</tr>';
+    }).join("");
+
+    const pending = (r.pending_orders || []).map(function(o){
+      return '<li><span class="chip s-' + esc(o.side) + '">' + esc(o.side) + '</span> ' +
+        '<span class="tk">' + esc(o.ticker) + '</span> ' +
+        '<span class="mono">' + o.shares + '株</span> ' +
+        '<span class="sector">' + esc(o.created_date) + ' 発注 → 次の寄り付きで約定</span></li>';
+    }).join("");
+
+    const runs = s.runs || [];
+    const runBar = runs.length > 1
+      ? '<div class="block">' +
+          '<h2>ラウンド</h2>' +
+          '<div class="segbar" id="runBar">' +
+            runs.map(function(x){
+              return '<button class="seg' + (x.id === r.id ? " on" : "") + '" ' +
+                'data-run="' + esc(x.id) + '">' + esc(x.label || x.id) +
+                '<span class="seg-sub">' + usd(x.initial_cash, 0) +
+                (x.status !== "active" ? " · 停止中" : "") + '</span></button>';
+            }).join("") +
+          '</div>' +
+          '<p class="note">同じAIの同じ判断を、違う金額に当てはめた結果。' +
+            '判断は「資産の何%」で出るので、金額を増やしても委員会は1日1回のままで、' +
+            'AIの使用量は変わらない。違いは金額だけなので、金額そのものの効き方が見える。</p>' +
+        '</div>'
+      : '';
+
+    $("view-home").innerHTML =
+      (state.offline ? '<div class="banner">最新データを読み込めませんでした。' +
+        '表示しているのは ' + esc(s.updated) + ' 時点の内容です。</div>' : '') +
+      runBar +
+      '<div class="block">' +
+        '<div class="headline">' +
+          '<span class="big">' + usd(acc.total_equity, 0) + '</span>' +
+          '<span class="delta ' + tone(ret) + '">' + signed(ret) + '</span>' +
+        '</div>' +
+        '<p class="subline">現金 ' + usd(acc.cash, 0) + ' / 株式 ' + usd(acc.holdings_value, 0) +
+          ' &nbsp;·&nbsp; 元手 ' + usd(initial, 0) + '</p>' +
+        (r.liveAt
+          ? '<p class="subline live">● 現在値 ' + esc(clock(r.liveAt)) + ' 時点' +
+            '<span class="sector"> — 台帳は ' + esc(s.as_of) + ' の終値で締めています</span></p>'
+          : '') +
+      '</div>' +
+
+      '<div class="block">' +
+        '<h2>ベースラインとの差</h2>' +
+        '<div class="bl">' + rows + '</div>' +
+        '<p class="note">右端は AI委員会 との差。' +
+          '同じ期間・同じ約定ルールで動かした3つに勝てていなければ、AIの判断には価値がない。</p>' +
+      '</div>' +
+
+      '<div class="block">' +
+        '<h2>資産推移</h2>' +
+        '<div class="segbar right">' +
+          '<button class="seg mini' + (state.pctMode ? "" : " on") + '" data-mode="usd">金額</button>' +
+          '<button class="seg mini' + (state.pctMode ? " on" : "") + '" data-mode="pct">増減率</button>' +
+        '</div>' +
+        '<div class="panel pad"><div class="chart"><canvas id="cEquity"></canvas></div></div>' +
+        (runs.length > 1
+          ? '<p class="note">金額の違うラウンドを同じドル軸に並べても高さが違うだけで比べられない。' +
+            '増減率にすると、どちらがよく増えたかが同じ軸で見える。</p>'
+          : '') +
+
+      '<div class="block">' +
+        '<h2>現在の保有</h2>' +
+        (posRows
+          ? '<div class="panel"><div class="scroll"><table><thead><tr>' +
+            '<th>銘柄</th><th class="num">株数</th><th class="num">取得</th><th class="num">現在</th>' +
+            '<th class="num">損益</th><th class="num">評価額</th><th>資産比</th>' +
+            '</tr></thead><tbody>' + posRows + '</tbody></table></div></div>'
+          : '<div class="empty">保有なし(すべて現金)</div>') +
+      '</div>' +
+
+      (pending
+        ? '<div class="block"><h2>未約定の注文</h2>' +
+          '<div class="panel pad"><ul style="margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:8px;font-size:.84rem">' +
+          pending + '</ul></div>' +
+          '<p class="note">判断した時点では翌日の始値が分からないので、注文はいったん保留し、' +
+          '翌営業日の寄り付きで約定させている。</p></div>'
+        : '');
+
+    // ラウンドの切り替えと、金額 / 増減率の切り替え。
+    // innerHTML を作り直すたびにボタンも作り直されるので、ここで毎回つなぐ。
+    const bar = $("runBar");
+    if (bar){
+      bar.querySelectorAll("[data-run]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          state.run = btn.getAttribute("data-run");
+          renderHome();
+        });
+      });
+    }
+    $("view-home").querySelectorAll("[data-mode]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        state.pctMode = btn.getAttribute("data-mode") === "pct";
+        renderHome();
+      });
+    });
+
+    const days = eq.days || [];
+    const asPct = state.pctMode;
+    // 増減率は「元手からの増減」。金額の違うラウンドを同じ軸に乗せるための変換。
+    const conv = function(v){
+      return v == null ? null : (asPct ? (v / initial - 1) * 100 : v);
+    };
+
+    drawChart("equity", "cEquity", {
+      type:"line",
+      data:{
+        labels: days.map(jpDate),
+        datasets: (eq.accounts || []).map(function(a){
+          const c = cssVar(ACCOUNT_COLOR[a.key] || "--flat");
+          const me = a.key === "ai";
+          return {
+            label:a.label, data:(a.values || []).map(conv),
+            borderColor:c, backgroundColor:c,
+            borderWidth: me ? 2.4 : 1.4, borderDash: me ? [] : [4,4],
+            pointRadius:0, pointHoverRadius:3, tension:.15, spanGaps:true
+          };
+        })
+      },
+      options: Object.assign(axisOptions(function(v){
+        return asPct ? v.toFixed(1) + "%" : "$" + (v/1000).toFixed(1) + "k";
+      }), {
+        plugins:{
+          legend:{ labels:{ color:cssVar("--ink-2"), boxWidth:14, boxHeight:2,
+                            usePointStyle:false, font:{ family:"Noto Sans JP", size:11 } } },
+          tooltip:{ callbacks:{ label:function(c){
+            return c.dataset.label + "  " +
+              (asPct ? (c.parsed.y >= 0 ? "+" : "") + c.parsed.y.toFixed(2) + "%" : usd(c.parsed.y));
+          } } }
+        }
+      })
+    });
+  }
+
+  /* ------------------------------------------------------------ 議論 */
+
+  function viewCard(v){
+    return '<div class="view v-' + esc(v.source) + '">' +
+      '<div class="who"><i class="dot"></i>' + esc(v.label) +
+        '<span class="chip s-' + esc(v.stance) + '" style="margin-left:6px">' + esc(v.stance) + '</span>' +
+        '<span class="conf">確信 ' + (v.confidence != null ? pct(v.confidence, 0) : "—") + '</span>' +
+      '</div>' +
+      (v.thesis ? '<p class="thesis">' + esc(v.thesis) + '</p>' : '') +
+      (v.falsification ? '<div class="falsi"><b>反証条件</b>' + esc(v.falsification) + '</div>' : '') +
+    '</div>';
+  }
+
+  function debateEntry(t){
+    const badgeClass = t.agreement === "対立" ? "b-conflict"
+                     : t.agreement === "分かれた" ? "b-split" : "b-agree";
+    const minis = (t.views || []).map(function(v){
+      return '<span class="mini m-' + esc(v.source) + '">' + esc(v.stance) + '</span>';
+    }).join("");
+
+    const cap = t.cap && (t.cap.max_pct != null || t.cap.reason)
+      ? '<div class="capline"><span class="lab">リスク上限 ' +
+        (t.cap.max_pct != null ? pct(t.cap.max_pct, 0) : "—") + '</span>' +
+        '<span>' + esc(t.cap.reason) + '</span></div>'
+      : '';
+
+    const ruling = t.action
+      ? '<div class="ruling">' +
+          '<div class="who" style="color:var(--a-chair)"><i class="dot"></i>議長の裁定' +
+            '<span class="chip s-' + esc(t.action) + '" style="margin-left:6px">' + esc(t.action) + '</span>' +
+            (t.action === "BUY" && t.target_pct
+              ? '<span class="chip s-HOLD" style="margin-left:4px">目標 ' + pct(t.target_pct,1) + '</span>' : '') +
+            '<span class="conf">確信 ' + (t.confidence != null ? pct(t.confidence,0) : "—") +
+              (t.horizon_days ? ' / ' + t.horizon_days + '日' : '') + '</span>' +
+          '</div>' +
+          (t.thesis ? '<p class="thesis">' + esc(t.thesis) + '</p>' : '') +
+          (t.falsification ? '<div class="falsi"><b>反証条件</b>' + esc(t.falsification) + '</div>' : '') +
+        '</div>'
+      : '';
+
+    return '<details class="deb a-' + esc(t.action || "HOLD") + '"' + (t.agreement === "対立" ? " open" : "") + '>' +
+      '<summary>' +
+        '<span class="deb-tk">' + esc(t.ticker) + '</span>' +
+        '<span class="sector">' + esc(t.sector) + '</span>' +
+        (t.action ? '<span class="chip s-' + esc(t.action) + '">' + esc(t.action) + '</span>' : '') +
+        '<span class="badge ' + badgeClass + '">' + esc(t.agreement) + '</span>' +
+        '<span class="deb-views">' + minis + '</span>' +
+      '</summary>' +
+      '<div class="deb-body">' + ruling +
+        '<div class="views-grid">' + (t.views || []).map(viewCard).join("") + '</div>' +
+        cap +
+      '</div>' +
+    '</details>';
+  }
+
+  function renderDebate(){
+    const s = state.summary;
+    const allDays = s.days || [];
+    if (!state.day && allDays.length) state.day = allDays[0];
+
+    const pills = allDays.map(function(d){
+      return '<button class="pill" type="button" data-day="' + esc(d) + '" aria-pressed="' +
+        (d === state.day ? "true" : "false") + '">' + esc(d) + '</button>';
+    }).join("");
+
+    const day = state.day ? state.days[state.day] : null;
+    let body;
+
+    if (!allDays.length){
+      body = '<div class="empty">まだ議論の記録がありません。</div>';
+    } else if (!day){
+      body = '<div class="empty">' + (state.offline
+        ? "この端末では過去の議論を読み込めません。"
+        : esc(state.day) + " の議論を読み込んでいます…") + '</div>';
+    } else {
+      const c = day.counts || {};
+      const risk = day.risk || {};
+      const concerns = (risk.concerns || []).map(function(x){
+        return '<li>' + esc(typeof x === "string" ? x : JSON.stringify(x)) + '</li>';
+      }).join("");
+
+      body =
+        '<div class="block">' +
+          '<h2>議長の総括</h2>' +
+          '<p class="lead">' + esc(day.chair_summary) + '</p>' +
+          '<p class="counts"><span>BUY ' + (c.BUY||0) + '</span><span>SELL ' + (c.SELL||0) +
+            '</span><span>HOLD ' + (c.HOLD||0) + '</span></p>' +
+        '</div>' +
+        (day.dissent
+          ? '<div class="block"><h2>採らなかった意見</h2>' +
+            '<div class="panel pad"><p class="thesis" style="margin:0">' + esc(day.dissent) + '</p></div></div>'
+          : '') +
+        (risk.portfolio_assessment || concerns
+          ? '<div class="block"><h2>リスク管理の所見</h2><div class="panel pad" style="display:flex;flex-direction:column;gap:10px">' +
+            (risk.max_total_exposure != null
+              ? '<p class="subline" style="margin:0">株式の総枠 ' + pct(risk.max_total_exposure,0) + ' まで</p>' : '') +
+            (risk.portfolio_assessment ? '<p class="thesis" style="margin:0">' + esc(risk.portfolio_assessment) + '</p>' : '') +
+            (concerns ? '<ul class="thesis" style="margin:0;padding-left:1.1em">' + concerns + '</ul>' : '') +
+            '</div></div>'
+          : '') +
+        '<div class="block">' +
+          '<h2>銘柄ごとの討論</h2>' +
+          '<div>' + (day.tickers || []).map(debateEntry).join("") + '</div>' +
+          '<p class="note">見送った銘柄(HOLD)も省いていない。' +
+            '「なぜ買わなかったか」が読めないと、判断の半分が検証できなくなるため。</p>' +
+        '</div>';
+    }
+
+    $("view-debate").innerHTML =
+      '<div class="block"><h2>日付</h2><div class="pills" id="dayPills">' + pills + '</div></div>' + body;
+
+    const holder = $("dayPills");
+    if (holder){
+      holder.addEventListener("click", function(ev){
+        const btn = ev.target.closest("[data-day]");
+        if (!btn) return;
+        state.day = btn.getAttribute("data-day");
+        renderDebate();
+        loadDay(state.day);
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------ 銘柄 */
+
+  function renderTicker(){
+    const s = state.summary;
+    const list = s.tickers || [];
+    if (!state.ticker && list.length) state.ticker = list[0];
+
+    const chips = list.map(function(t){
+      return '<button class="pill" type="button" data-ticker="' + esc(t) + '" aria-pressed="' +
+        (t === state.ticker ? "true" : "false") + '">' + esc(t) + '</button>';
+    }).join("");
+
+    const data = state.ticker ? state.tickers[state.ticker] : null;
+    let body;
+
+    if (!list.length){
+      body = '<div class="empty">まだ対象になった銘柄がありません。</div>';
+    } else if (!data){
+      body = '<div class="empty">' + (state.offline
+        ? "この端末では銘柄データを読み込めません。"
+        : esc(state.ticker) + " を読み込んでいます…") + '</div>';
+    } else {
+      const p = data.position;
+      const facts = p
+        ? '<div class="facts">' +
+            '<div class="fact"><dt>株数</dt><dd>' + Number(p.shares).toLocaleString() + '</dd></div>' +
+            '<div class="fact"><dt>取得単価</dt><dd>' + usd(p.avg_cost) + '</dd></div>' +
+            '<div class="fact"><dt>現在値</dt><dd>' + usd(p.price) + '</dd></div>' +
+            '<div class="fact"><dt>評価額</dt><dd>' + usd(p.value, 0) + '</dd></div>' +
+            '<div class="fact"><dt>含み損益</dt><dd class="' + tone(p.unrealized) + '">' +
+              (p.unrealized > 0 ? "+" : "") + usd(p.unrealized) + '</dd></div>' +
+          '</div>'
+        : '<div class="empty">この銘柄は現在保有していない。</div>';
+
+      const trades = (data.trades || []).map(function(t){
+        return '<tr><td class="mono">' + esc(t.date) + '</td>' +
+          '<td><span class="chip s-' + esc(t.side) + '">' + esc(t.side) + '</span></td>' +
+          '<td class="num">' + Number(t.shares).toLocaleString() + '</td>' +
+          '<td class="num">' + usd(t.price) + '</td>' +
+          '<td class="num">' + usd(t.value, 0) + '</td></tr>';
+      }).join("");
+
+      const judged = (data.judgments || []).map(function(j){
+        const color = SOURCE_COLOR[j.source] || "--ink-3";
+        const result = j.correct == null
+          ? '<span class="badge b-agree">採点待ち</span>'
+          : '<span class="badge ' + (j.correct ? "b-agree" : "b-conflict") + '">' +
+            (j.correct ? "的中" : "外れ") + ' 残差 ' + signed(j.residual_return, 1) + '</span>';
+        return '<div class="tl-item">' +
+          '<div class="tl-date">' + esc(j.date) + '</div>' +
+          '<div class="tl-card" style="color:' + cssVar(color) + '">' +
+            '<div class="who"><i class="dot"></i>' + esc(j.label) +
+              '<span class="chip s-' + esc(j.stance) + '" style="margin-left:6px">' + esc(j.stance) + '</span>' +
+              '<span class="conf">確信 ' + (j.confidence != null ? pct(j.confidence,0) : "—") + '</span>' +
+            '</div>' +
+            '<div>' + result + '</div>' +
+            (j.thesis ? '<p class="thesis">' + esc(j.thesis) + '</p>' : '') +
+            (j.falsification ? '<div class="falsi"><b>反証条件</b>' + esc(j.falsification) + '</div>' : '') +
+          '</div>' +
+        '</div>';
+      }).join("");
+
+      body =
+        '<div class="block">' +
+          '<div class="brand"><h1 style="font-size:1.4rem;font-family:var(--mono)">' + esc(data.ticker) + '</h1>' +
+            '<span class="as-of">' + esc(data.sector) + '</span></div>' +
+          '<div class="panel pad"><div class="chart sm"><canvas id="cPrice"></canvas></div></div>' +
+          '<p class="note">調整後終値(配当・分割の影響を除いた実質の値動き)。直近' +
+            ((data.prices && data.prices.days.length) || 0) + '営業日。</p>' +
+        '</div>' +
+        '<div class="block"><h2>保有状況</h2>' + facts + '</div>' +
+        (trades
+          ? '<div class="block"><h2>この銘柄の売買</h2><div class="panel"><div class="scroll"><table><thead><tr>' +
+            '<th>約定日</th><th>売買</th><th class="num">株数</th><th class="num">単価</th><th class="num">金額</th>' +
+            '</tr></thead><tbody>' + trades + '</tbody></table></div></div></div>'
+          : '') +
+        '<div class="block"><h2>この銘柄への判断</h2>' +
+          (judged ? '<div class="tl">' + judged + '</div>' : '<div class="empty">判断の記録がない。</div>') +
+        '</div>';
+    }
+
+    $("view-ticker").innerHTML =
+      '<div class="block"><h2>銘柄</h2><div class="pills tkgrid" id="tkPills">' + chips + '</div></div>' + body;
+
+    const holder = $("tkPills");
+    if (holder){
+      holder.addEventListener("click", function(ev){
+        const btn = ev.target.closest("[data-ticker]");
+        if (!btn) return;
+        state.ticker = btn.getAttribute("data-ticker");
+        renderTicker();
+        loadTicker(state.ticker);
+      });
+    }
+
+    if (data && data.prices && data.prices.days.length){
+      const c = cssVar("--accent");
+      drawChart("price", "cPrice", {
+        type:"line",
+        data:{ labels:data.prices.days.map(jpDate), datasets:[{
+          label:data.ticker, data:data.prices.close,
+          borderColor:c, backgroundColor:"color-mix(in srgb, " + c + " 14%, transparent)",
+          borderWidth:1.8, pointRadius:0, pointHoverRadius:3, tension:.15, fill:true
+        }]},
+        options: Object.assign(axisOptions(function(v){ return "$" + Number(v).toFixed(0); }), {
+          plugins:{ legend:{ display:false },
+            tooltip:{ callbacks:{ label:function(x){ return usd(x.parsed.y); } } } }
+        })
+      });
+    }
+  }
+
+  /* ---------------------------------------------------------- 通信簿 */
+
+  function renderScore(){
+    const s = state.summary;
+    const pred = s.predictions || {};
+    const cal = s.calibration || [];
+    const card = s.scorecard || [];
+    const horizon = (s.rules && s.rules.scoring_horizon_days) || 20;
+
+    const cardRows = card.map(function(r){
+      return '<tr><td>' + esc(r.label) + (r.reliable ? '' : ' <span class="badge b-split">n不足</span>') + '</td>' +
+        '<td class="num">' + r.n + '</td>' +
+        '<td class="num">' + pct(r.accuracy, 1) + '</td>' +
+        '<td class="num">' + pct(r.avg_stated_confidence, 1) + '</td>' +
+        '<td class="num ' + (r.calibration_gap > 0.1 ? "neg" : "") + '">' + signed(r.calibration_gap, 1) + '</td></tr>';
+    }).join("");
+
+    const tradeRows = (runView().trades || []).map(function(t){
+      return '<tr><td class="mono">' + esc(t.date) + '</td>' +
+        '<td><span class="tk">' + esc(t.ticker) + '</span></td>' +
+        '<td><span class="chip s-' + esc(t.side) + '">' + esc(t.side) + '</span></td>' +
+        '<td class="num">' + Number(t.shares).toLocaleString() + '</td>' +
+        '<td class="num">' + usd(t.price) + '</td>' +
+        '<td class="num">' + usd(t.value, 0) + '</td></tr>';
+    }).join("");
+
+    $("view-score").innerHTML =
+      '<div class="block">' +
+        '<h2>採点の進み具合</h2>' +
+        '<div class="facts">' +
+          '<div class="fact"><dt>記録した判断</dt><dd>' + (pred.recorded || 0) + '</dd></div>' +
+          '<div class="fact"><dt>採点済み</dt><dd>' + (pred.scored || 0) + '</dd></div>' +
+          '<div class="fact"><dt>採点待ち</dt><dd>' + (pred.awaiting || 0) + '</dd></div>' +
+        '</div>' +
+        '<p class="note">判断から' + horizon + '営業日たつと採点される。' +
+          '採点は「上がったか」ではなく<b>残差リターン(銘柄 − SPY)</b>で行う。' +
+          '単純な騰落だと強気相場で何を買っても当たりになってしまうため。</p>' +
+      '</div>' +
+
+      '<div class="block">' +
+        '<h2>確信度は当たっているか</h2>' +
+        (cal.length
+          ? '<div class="panel pad"><div class="chart sm"><canvas id="cCal"></canvas></div></div>'
+          : '<div class="empty">採点済みの判断が0件。最初の採点が出ると、ここに' +
+            '「70%と言った判断が実際に何割当たったか」のグラフが出る。</div>') +
+      '</div>' +
+
+      '<div class="block">' +
+        '<h2>アナリスト通信簿</h2>' +
+        (cardRows
+          ? '<div class="panel"><div class="scroll"><table><thead><tr>' +
+            '<th>担当</th><th class="num">件数</th><th class="num">的中率</th>' +
+            '<th class="num">申告確信度</th><th class="num">ズレ</th>' +
+            '</tr></thead><tbody>' + cardRows + '</tbody></table></div></div>'
+          : '<div class="empty">まだ採点できる判断がない。</div>') +
+        '<p class="note">' + esc(s.scorecard_note || "") + '</p>' +
+      '</div>' +
+
+      '<div class="block">' +
+        '<h2>取引履歴</h2>' +
+        (tradeRows
+          ? '<div class="panel"><div class="scroll"><table><thead><tr>' +
+            '<th>約定日</th><th>銘柄</th><th>売買</th><th class="num">株数</th>' +
+            '<th class="num">単価</th><th class="num">金額</th>' +
+            '</tr></thead><tbody>' + tradeRows + '</tbody></table></div></div>'
+          : '<div class="empty">まだ約定がない。</div>') +
+        '<p class="note">単価には片道0.05%のスリッページを含む。' +
+          '手数料を0にすると成績が構造的に甘くなるため、わざと不利側に寄せている。</p>' +
+      '</div>';
+
+    if (cal.length){
+      drawChart("cal", "cCal", {
+        type:"bar",
+        data:{ labels:cal.map(function(b){ return b.range; }), datasets:[
+          { label:"申告した確信度", data:cal.map(function(b){ return b.stated_confidence; }),
+            backgroundColor:cssVar("--line-2"), borderRadius:3 },
+          { label:"実際の的中率", data:cal.map(function(b){ return b.actual_accuracy; }),
+            backgroundColor:cssVar("--accent"), borderRadius:3 }
+        ]},
+        options: Object.assign(axisOptions(function(v){ return (v*100).toFixed(0) + "%"; }), {
+          plugins:{ legend:{ labels:{ color:cssVar("--ink-2"), boxWidth:12, boxHeight:12,
+                                      font:{ family:"Noto Sans JP", size:11 } } } }
+        })
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------ 画面 */
+
+  function render(){
+    $("asOf").textContent = state.summary.as_of
+      ? state.summary.as_of + " の終値時点" : "";
+    if (state.view === "home") renderHome();
+    else if (state.view === "debate") renderDebate();
+    else if (state.view === "ticker") renderTicker();
+    else renderScore();
+  }
+
+  function switchView(name){
+    state.view = name;
+    ["home","debate","ticker","score"].forEach(function(v){
+      $("view-" + v).hidden = v !== name;
+      $("tab-" + v).setAttribute("aria-selected", v === name ? "true" : "false");
+    });
+    render();
+    if (name === "debate" && state.day) loadDay(state.day);
+    if (name === "ticker" && state.ticker) loadTicker(state.ticker);
+  }
+
+  document.querySelectorAll(".tab").forEach(function(btn){
+    btn.addEventListener("click", function(){ switchView(btn.getAttribute("data-view")); });
+  });
+
+  /* ------------------------------------------------- データの読み込み */
+
+  // データの出どころは2通りある。同じページを両方で動かすため、
+  // 使える方を自動で選ぶ。
+  //   Artifact 版  … claude の db から読む(人が承認してアップロードしたもの)
+  //   Webサイト版  … 隣に置いてある JSON をそのまま読む(自動で更新される)
+  async function fetchDoc(path){
+    if (db){
+      try{
+        const snap = await db.doc(path).get();
+        if (snap && snap.exists) return snap.data();
+      }catch(e){ /* 下の静的ファイルで拾い直す */ }
+    }
+    try{
+      const res = await fetch("./data/" + path + ".json", { cache: "no-store" });
+      return res.ok ? await res.json() : null;
+    }catch(e){
+      return null;
+    }
+  }
+
+  async function loadDay(day){
+    if (!day || state.days[day]) return;
+    const data = await fetchDoc("days/" + day);
+    if (data){ state.days[day] = data; if (state.view === "debate") renderDebate(); }
+  }
+
+  async function loadTicker(ticker){
+    if (!ticker || state.tickers[ticker]) return;
+    const data = await fetchDoc("tickers/" + ticker);
+    if (data){ state.tickers[ticker] = data; if (state.view === "ticker") renderTicker(); }
+  }
+
+  // 場中の現在値。Webサイト版でしか置かれないので、無ければ黙って諦める。
+  async function loadLive(){
+    try{
+      const res = await fetch("./data/live.json", { cache: "no-store" });
+      if (!res.ok) return;
+      state.live = await res.json();
+      if (state.view === "home") renderHome();
+    }catch(e){ /* Artifact版には無い。前日終値のまま表示する */ }
+  }
+
+  async function boot(){
+    render();                       // まず種データで描く。待たせない。
+    db = await window.claude?.use?.("db");
+
+    const latest = await fetchDoc("summary/latest");
+    if (latest){
+      state.summary = latest;
+      state.day = null;
+      state.ticker = null;
+      render();
+    } else {
+      // db も静的ファイルも読めなかったときだけ、種データのままだと伝える
+      state.offline = true;
+      render();
+    }
+    if (state.view === "debate" && state.day) loadDay(state.day);
+    if (state.view === "ticker" && state.ticker) loadTicker(state.ticker);
+
+    // 現在値は5分ごとに取り直す。書き出し自体は1時間ごとなので、
+    // これは「ページを開きっぱなしにしていても古くならない」ためのもの。
+    loadLive();
+    setInterval(loadLive, 5 * 60 * 1000);
+  }
+
+  boot();
+})();
+</script>
+
+</body>
+</html>
