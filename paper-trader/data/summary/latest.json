@@ -1,6 +1,6 @@
 {
- "updated": "2026-10-29",
- "as_of": "2026-10-28",
+ "updated": "2026-10-30",
+ "as_of": "2026-10-29",
  "primary_run": "r1",
  "runs": [
   {
@@ -37,7 +37,8 @@
      "2026-10-23",
      "2026-10-26",
      "2026-10-27",
-     "2026-10-28"
+     "2026-10-28",
+     "2026-10-29"
     ],
     "accounts": [
      {
@@ -74,7 +75,8 @@
        102443.67,
        102414.52,
        101898.8,
-       101926.52
+       101926.52,
+       103808.43
       ]
      },
      {
@@ -111,7 +113,8 @@
        99176.67,
        100290.43,
        100435.56,
-       100539.61
+       100539.61,
+       101152.32
       ]
      },
      {
@@ -148,7 +151,8 @@
        100376.44,
        101089.67,
        101656.29,
-       102006.3
+       102006.3,
+       101616.67
       ]
      },
      {
@@ -185,22 +189,23 @@
        100722.44,
        100997.84,
        100996.27,
-       101087.78
+       101087.78,
+       101513.82
       ]
      }
     ]
    },
    "totals": {
-    "ai": 101926.52,
-    "random": 100539.61,
-    "spy_hold": 102006.3,
-    "equal_hold": 101087.78
+    "ai": 103808.43,
+    "random": 101152.32,
+    "spy_hold": 101616.67,
+    "equal_hold": 101513.82
    },
    "account": {
     "cash": 33958.76,
-    "holdings_value": 67967.76,
-    "total_equity": 101926.52,
-    "return_pct": 0.0193
+    "holdings_value": 69849.67,
+    "total_equity": 103808.43,
+    "return_pct": 0.0381
    },
    "positions": [
     {
@@ -208,91 +213,99 @@
      "sector": "Healthcare",
      "shares": 12.0,
      "avg_cost": 1174.4123,
-     "price": 1288.3,
-     "value": 15459.6,
-     "unrealized": 1366.65,
-     "return_pct": 0.097,
-     "weight": 0.1517
+     "price": 1373.7,
+     "value": 16484.4,
+     "unrealized": 2391.45,
+     "return_pct": 0.1697,
+     "weight": 0.1588
     },
     {
      "ticker": "CVX",
      "sector": "Energy",
      "shares": 59.0,
      "avg_cost": 218.2185,
-     "price": 229.2,
-     "value": 13522.8,
-     "unrealized": 647.91,
-     "return_pct": 0.0503,
-     "weight": 0.1327
+     "price": 231.46,
+     "value": 13656.14,
+     "unrealized": 781.25,
+     "return_pct": 0.0607,
+     "weight": 0.1316
     },
     {
      "ticker": "MA",
      "sector": "Financials",
      "shares": 20.0,
      "avg_cost": 572.0648,
-     "price": 610.31,
-     "value": 12206.2,
-     "unrealized": 764.9,
-     "return_pct": 0.0669,
-     "weight": 0.1198
+     "price": 635.7,
+     "value": 12714.0,
+     "unrealized": 1272.7,
+     "return_pct": 0.1112,
+     "weight": 0.1225
     },
     {
      "ticker": "COST",
      "sector": "Consumer",
      "shares": 8.0,
      "avg_cost": 991.5668,
-     "price": 982.73,
-     "value": 7861.84,
-     "unrealized": -70.69,
-     "return_pct": -0.0089,
-     "weight": 0.0771
+     "price": 996.08,
+     "value": 7968.64,
+     "unrealized": 36.11,
+     "return_pct": 0.0046,
+     "weight": 0.0768
     },
     {
      "ticker": "XOM",
      "sector": "Energy",
      "shares": 41.0,
      "avg_cost": 166.2761,
-     "price": 182.02,
-     "value": 7462.82,
-     "unrealized": 645.5,
-     "return_pct": 0.0947,
-     "weight": 0.0732
+     "price": 183.29,
+     "value": 7514.89,
+     "unrealized": 697.57,
+     "return_pct": 0.1023,
+     "weight": 0.0724
     },
     {
      "ticker": "NVDA",
      "sector": "Technology",
      "shares": 24.0,
      "avg_cost": 230.5964,
-     "price": 215.38,
-     "value": 5169.12,
-     "unrealized": -365.19,
-     "return_pct": -0.066,
-     "weight": 0.0507
+     "price": 213.66,
+     "value": 5127.84,
+     "unrealized": -406.47,
+     "return_pct": -0.0734,
+     "weight": 0.0494
     },
     {
      "ticker": "AAPL",
      "sector": "Technology",
      "shares": 11.0,
      "avg_cost": 347.0585,
-     "price": 343.83,
-     "value": 3782.13,
-     "unrealized": -35.51,
-     "return_pct": -0.0093,
-     "weight": 0.0371
+     "price": 348.91,
+     "value": 3838.01,
+     "unrealized": 20.37,
+     "return_pct": 0.0053,
+     "weight": 0.037
     },
     {
      "ticker": "PFE",
      "sector": "Healthcare",
      "shares": 85.0,
      "avg_cost": 30.06,
-     "price": 29.45,
-     "value": 2503.25,
-     "unrealized": -51.85,
-     "return_pct": -0.0203,
-     "weight": 0.0246
+     "price": 29.95,
+     "value": 2545.75,
+     "unrealized": -9.35,
+     "return_pct": -0.0037,
+     "weight": 0.0245
     }
    ],
-   "pending_orders": [],
+   "pending_orders": [
+    {
+     "ticker": "MA",
+     "side": "BUY",
+     "shares": 2,
+     "created_date": "2026-10-29",
+     "confidence": 0.5
+    }
+   ],
    "trades": [
     {
      "date": "2026-10-28",
@@ -943,7 +956,8 @@
    "2026-10-23",
    "2026-10-26",
    "2026-10-27",
-   "2026-10-28"
+   "2026-10-28",
+   "2026-10-29"
   ],
   "accounts": [
    {
@@ -980,7 +994,8 @@
      102443.67,
      102414.52,
      101898.8,
-     101926.52
+     101926.52,
+     103808.43
     ]
    },
    {
@@ -1017,7 +1032,8 @@
      99176.67,
      100290.43,
      100435.56,
-     100539.61
+     100539.61,
+     101152.32
     ]
    },
    {
@@ -1054,7 +1070,8 @@
      100376.44,
      101089.67,
      101656.29,
-     102006.3
+     102006.3,
+     101616.67
     ]
    },
    {
@@ -1091,22 +1108,23 @@
      100722.44,
      100997.84,
      100996.27,
-     101087.78
+     101087.78,
+     101513.82
     ]
    }
   ]
  },
  "totals": {
-  "ai": 101926.52,
-  "random": 100539.61,
-  "spy_hold": 102006.3,
-  "equal_hold": 101087.78
+  "ai": 103808.43,
+  "random": 101152.32,
+  "spy_hold": 101616.67,
+  "equal_hold": 101513.82
  },
  "account": {
   "cash": 33958.76,
-  "holdings_value": 67967.76,
-  "total_equity": 101926.52,
-  "return_pct": 0.0193
+  "holdings_value": 69849.67,
+  "total_equity": 103808.43,
+  "return_pct": 0.0381
  },
  "positions": [
   {
@@ -1114,91 +1132,99 @@
    "sector": "Healthcare",
    "shares": 12.0,
    "avg_cost": 1174.4123,
-   "price": 1288.3,
-   "value": 15459.6,
-   "unrealized": 1366.65,
-   "return_pct": 0.097,
-   "weight": 0.1517
+   "price": 1373.7,
+   "value": 16484.4,
+   "unrealized": 2391.45,
+   "return_pct": 0.1697,
+   "weight": 0.1588
   },
   {
    "ticker": "CVX",
    "sector": "Energy",
    "shares": 59.0,
    "avg_cost": 218.2185,
-   "price": 229.2,
-   "value": 13522.8,
-   "unrealized": 647.91,
-   "return_pct": 0.0503,
-   "weight": 0.1327
+   "price": 231.46,
+   "value": 13656.14,
+   "unrealized": 781.25,
+   "return_pct": 0.0607,
+   "weight": 0.1316
   },
   {
    "ticker": "MA",
    "sector": "Financials",
    "shares": 20.0,
    "avg_cost": 572.0648,
-   "price": 610.31,
-   "value": 12206.2,
-   "unrealized": 764.9,
-   "return_pct": 0.0669,
-   "weight": 0.1198
+   "price": 635.7,
+   "value": 12714.0,
+   "unrealized": 1272.7,
+   "return_pct": 0.1112,
+   "weight": 0.1225
   },
   {
    "ticker": "COST",
    "sector": "Consumer",
    "shares": 8.0,
    "avg_cost": 991.5668,
-   "price": 982.73,
-   "value": 7861.84,
-   "unrealized": -70.69,
-   "return_pct": -0.0089,
-   "weight": 0.0771
+   "price": 996.08,
+   "value": 7968.64,
+   "unrealized": 36.11,
+   "return_pct": 0.0046,
+   "weight": 0.0768
   },
   {
    "ticker": "XOM",
    "sector": "Energy",
    "shares": 41.0,
    "avg_cost": 166.2761,
-   "price": 182.02,
-   "value": 7462.82,
-   "unrealized": 645.5,
-   "return_pct": 0.0947,
-   "weight": 0.0732
+   "price": 183.29,
+   "value": 7514.89,
+   "unrealized": 697.57,
+   "return_pct": 0.1023,
+   "weight": 0.0724
   },
   {
    "ticker": "NVDA",
    "sector": "Technology",
    "shares": 24.0,
    "avg_cost": 230.5964,
-   "price": 215.38,
-   "value": 5169.12,
-   "unrealized": -365.19,
-   "return_pct": -0.066,
-   "weight": 0.0507
+   "price": 213.66,
+   "value": 5127.84,
+   "unrealized": -406.47,
+   "return_pct": -0.0734,
+   "weight": 0.0494
   },
   {
    "ticker": "AAPL",
    "sector": "Technology",
    "shares": 11.0,
    "avg_cost": 347.0585,
-   "price": 343.83,
-   "value": 3782.13,
-   "unrealized": -35.51,
-   "return_pct": -0.0093,
-   "weight": 0.0371
+   "price": 348.91,
+   "value": 3838.01,
+   "unrealized": 20.37,
+   "return_pct": 0.0053,
+   "weight": 0.037
   },
   {
    "ticker": "PFE",
    "sector": "Healthcare",
    "shares": 85.0,
    "avg_cost": 30.06,
-   "price": 29.45,
-   "value": 2503.25,
-   "unrealized": -51.85,
-   "return_pct": -0.0203,
-   "weight": 0.0246
+   "price": 29.95,
+   "value": 2545.75,
+   "unrealized": -9.35,
+   "return_pct": -0.0037,
+   "weight": 0.0245
   }
  ],
- "pending_orders": [],
+ "pending_orders": [
+  {
+   "ticker": "MA",
+   "side": "BUY",
+   "shares": 2,
+   "created_date": "2026-10-29",
+   "confidence": 0.5
+  }
+ ],
  "trades": [
   {
    "date": "2026-10-28",
@@ -1810,6 +1836,7 @@
   }
  ],
  "days": [
+  "2026-10-29",
   "2026-10-28",
   "2026-10-27",
   "2026-10-26",
@@ -1868,124 +1895,124 @@
   {
    "source": "chair",
    "label": "議長",
-   "n": 40,
-   "accuracy": 0.375,
-   "avg_stated_confidence": 0.555,
-   "calibration_gap": 0.18,
-   "avg_residual_on_directional": 0.0146,
+   "n": 48,
+   "accuracy": 0.417,
+   "avg_stated_confidence": 0.557,
+   "calibration_gap": 0.141,
+   "avg_residual_on_directional": 0.0093,
    "reliable": true
   },
   {
    "source": "technical",
    "label": "テクニカル",
-   "n": 85,
-   "accuracy": 0.588,
+   "n": 91,
+   "accuracy": 0.582,
    "avg_stated_confidence": 0.558,
-   "calibration_gap": -0.031,
-   "avg_residual_on_directional": -0.0224,
+   "calibration_gap": -0.025,
+   "avg_residual_on_directional": -0.0247,
    "reliable": true
   },
   {
    "source": "macro",
    "label": "マクロ",
-   "n": 28,
-   "accuracy": 0.429,
-   "avg_stated_confidence": 0.493,
-   "calibration_gap": 0.064,
-   "avg_residual_on_directional": 0.0308,
-   "reliable": false
+   "n": 37,
+   "accuracy": 0.486,
+   "avg_stated_confidence": 0.491,
+   "calibration_gap": 0.004,
+   "avg_residual_on_directional": 0.0216,
+   "reliable": true
   }
  ],
  "scorecard_note": "n が 30 未満の成績は統計的にほぼ無意味。個別株の残差リターンはノイズが大きく、少ないサンプルの的中率で「誰が優秀か」を判断してはいけない。calibration_gap(申告した確信度 − 実際の的中率)が正なら自信過剰。",
  "calibration": [
   {
    "range": "0.0-0.5",
-   "n": 15,
-   "stated_confidence": 0.447,
-   "actual_accuracy": 0.467,
-   "gap": -0.02
+   "n": 19,
+   "stated_confidence": 0.445,
+   "actual_accuracy": 0.474,
+   "gap": -0.029
   },
   {
    "range": "0.5-0.6",
-   "n": 102,
+   "n": 116,
    "stated_confidence": 0.531,
-   "actual_accuracy": 0.539,
-   "gap": -0.008
+   "actual_accuracy": 0.552,
+   "gap": -0.021
   },
   {
    "range": "0.6-0.7",
-   "n": 34,
-   "stated_confidence": 0.621,
-   "actual_accuracy": 0.412,
-   "gap": 0.209
+   "n": 38,
+   "stated_confidence": 0.62,
+   "actual_accuracy": 0.447,
+   "gap": 0.172
   },
   {
    "range": "0.7-0.8",
-   "n": 2,
+   "n": 3,
    "stated_confidence": 0.7,
-   "actual_accuracy": 0.5,
-   "gap": 0.2
+   "actual_accuracy": 0.333,
+   "gap": 0.367
   }
  ],
  "predictions": {
-  "recorded": 865,
-  "scored": 153,
-  "awaiting": 712,
+  "recorded": 897,
+  "scored": 176,
+  "awaiting": 721,
   "scorecard": {
    "chair": {
-    "n": 40,
-    "accuracy": 0.375,
-    "avg_stated_confidence": 0.555,
-    "calibration_gap": 0.18,
-    "avg_residual_on_directional": 0.0146,
+    "n": 48,
+    "accuracy": 0.417,
+    "avg_stated_confidence": 0.557,
+    "calibration_gap": 0.141,
+    "avg_residual_on_directional": 0.0093,
     "reliable": true
    },
    "technical": {
-    "n": 85,
-    "accuracy": 0.588,
+    "n": 91,
+    "accuracy": 0.582,
     "avg_stated_confidence": 0.558,
-    "calibration_gap": -0.031,
-    "avg_residual_on_directional": -0.0224,
+    "calibration_gap": -0.025,
+    "avg_residual_on_directional": -0.0247,
     "reliable": true
    },
    "macro": {
-    "n": 28,
-    "accuracy": 0.429,
-    "avg_stated_confidence": 0.493,
-    "calibration_gap": 0.064,
-    "avg_residual_on_directional": 0.0308,
-    "reliable": false
+    "n": 37,
+    "accuracy": 0.486,
+    "avg_stated_confidence": 0.491,
+    "calibration_gap": 0.004,
+    "avg_residual_on_directional": 0.0216,
+    "reliable": true
    },
    "_note": "n が 30 未満の成績は統計的にほぼ無意味。個別株の残差リターンはノイズが大きく、少ないサンプルの的中率で「誰が優秀か」を判断してはいけない。calibration_gap(申告した確信度 − 実際の的中率)が正なら自信過剰。"
   },
   "calibration": [
    {
     "range": "0.0-0.5",
-    "n": 15,
-    "stated_confidence": 0.447,
-    "actual_accuracy": 0.467,
-    "gap": -0.02
+    "n": 19,
+    "stated_confidence": 0.445,
+    "actual_accuracy": 0.474,
+    "gap": -0.029
    },
    {
     "range": "0.5-0.6",
-    "n": 102,
+    "n": 116,
     "stated_confidence": 0.531,
-    "actual_accuracy": 0.539,
-    "gap": -0.008
+    "actual_accuracy": 0.552,
+    "gap": -0.021
    },
    {
     "range": "0.6-0.7",
-    "n": 34,
-    "stated_confidence": 0.621,
-    "actual_accuracy": 0.412,
-    "gap": 0.209
+    "n": 38,
+    "stated_confidence": 0.62,
+    "actual_accuracy": 0.447,
+    "gap": 0.172
    },
    {
     "range": "0.7-0.8",
-    "n": 2,
+    "n": 3,
     "stated_confidence": 0.7,
-    "actual_accuracy": 0.5,
-    "gap": 0.2
+    "actual_accuracy": 0.333,
+    "gap": 0.367
    }
   ]
  },
