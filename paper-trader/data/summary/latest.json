@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-06",
- "as_of": "2026-11-05",
+ "updated": "2026-11-07",
+ "as_of": "2026-11-06",
  "primary_run": "r1",
  "runs": [
   {
@@ -43,7 +43,8 @@
      "2026-11-02",
      "2026-11-03",
      "2026-11-04",
-     "2026-11-05"
+     "2026-11-05",
+     "2026-11-06"
     ],
     "accounts": [
      {
@@ -86,7 +87,8 @@
        104429.63,
        103706.84,
        104006.4,
-       102924.21
+       102924.21,
+       102584.74
       ]
      },
      {
@@ -129,7 +131,8 @@
        100761.83,
        100180.29,
        100870.31,
-       97504.99
+       97504.99,
+       98085.28
       ]
      },
      {
@@ -172,7 +175,8 @@
        99336.97,
        99634.15,
        101279.86,
-       96814.26
+       96814.26,
+       97116.72
       ]
      },
      {
@@ -215,22 +219,23 @@
        100734.22,
        100585.03,
        102695.18,
-       99019.05
+       99019.05,
+       99088.38
       ]
      }
     ]
    },
    "totals": {
-    "ai": 102924.21,
-    "random": 97504.99,
-    "spy_hold": 96814.26,
-    "equal_hold": 99019.05
+    "ai": 102584.74,
+    "random": 98085.28,
+    "spy_hold": 97116.72,
+    "equal_hold": 99088.38
    },
    "account": {
     "cash": 46682.57,
-    "holdings_value": 56241.64,
-    "total_equity": 102924.21,
-    "return_pct": 0.0292
+    "holdings_value": 55902.17,
+    "total_equity": 102584.74,
+    "return_pct": 0.0258
    },
    "positions": [
     {
@@ -238,80 +243,95 @@
      "sector": "Financials",
      "shares": 22.0,
      "avg_cost": 578.4909,
-     "price": 655.92,
-     "value": 14430.24,
-     "unrealized": 1703.44,
-     "return_pct": 0.1338,
-     "weight": 0.1402
+     "price": 652.7,
+     "value": 14359.4,
+     "unrealized": 1632.6,
+     "return_pct": 0.1283,
+     "weight": 0.14
     },
     {
      "ticker": "LLY",
      "sector": "Healthcare",
      "shares": 10.0,
      "avg_cost": 1174.4123,
-     "price": 1364.73,
-     "value": 13647.3,
-     "unrealized": 1903.18,
-     "return_pct": 0.1621,
-     "weight": 0.1326
+     "price": 1354.0,
+     "value": 13540.0,
+     "unrealized": 1795.88,
+     "return_pct": 0.1529,
+     "weight": 0.132
     },
     {
      "ticker": "CVX",
      "sector": "Energy",
      "shares": 47.0,
      "avg_cost": 218.2185,
-     "price": 212.93,
-     "value": 10007.71,
-     "unrealized": -248.56,
-     "return_pct": -0.0242,
-     "weight": 0.0972
+     "price": 212.61,
+     "value": 9992.67,
+     "unrealized": -263.6,
+     "return_pct": -0.0257,
+     "weight": 0.0974
     },
     {
      "ticker": "COST",
      "sector": "Consumer",
      "shares": 8.0,
      "avg_cost": 991.5668,
-     "price": 1065.59,
-     "value": 8524.72,
-     "unrealized": 592.19,
-     "return_pct": 0.0747,
-     "weight": 0.0828
+     "price": 1053.5601,
+     "value": 8428.48,
+     "unrealized": 495.95,
+     "return_pct": 0.0625,
+     "weight": 0.0822
     },
     {
      "ticker": "AAPL",
      "sector": "Technology",
      "shares": 11.0,
      "avg_cost": 347.0585,
-     "price": 344.17,
-     "value": 3785.87,
-     "unrealized": -31.77,
-     "return_pct": -0.0083,
-     "weight": 0.0368
+     "price": 342.37,
+     "value": 3766.07,
+     "unrealized": -51.57,
+     "return_pct": -0.0135,
+     "weight": 0.0367
     },
     {
      "ticker": "XOM",
      "sector": "Energy",
      "shares": 20.0,
      "avg_cost": 166.2761,
-     "price": 165.3,
-     "value": 3306.0,
-     "unrealized": -19.52,
-     "return_pct": -0.0059,
-     "weight": 0.0321
+     "price": 165.87,
+     "value": 3317.4,
+     "unrealized": -8.12,
+     "return_pct": -0.0024,
+     "weight": 0.0323
     },
     {
      "ticker": "PFE",
      "sector": "Healthcare",
      "shares": 85.0,
      "avg_cost": 30.06,
-     "price": 29.88,
-     "value": 2539.8,
-     "unrealized": -15.3,
-     "return_pct": -0.006,
-     "weight": 0.0247
+     "price": 29.39,
+     "value": 2498.15,
+     "unrealized": -56.95,
+     "return_pct": -0.0223,
+     "weight": 0.0244
     }
    ],
-   "pending_orders": [],
+   "pending_orders": [
+    {
+     "ticker": "CVX",
+     "side": "SELL",
+     "shares": 11,
+     "created_date": "2026-11-06",
+     "confidence": 0.44
+    },
+    {
+     "ticker": "XOM",
+     "side": "SELL",
+     "shares": 20,
+     "created_date": "2026-11-06",
+     "confidence": 0.45
+    }
+   ],
    "trades": [
     {
      "date": "2026-11-05",
@@ -1016,7 +1036,8 @@
    "2026-11-02",
    "2026-11-03",
    "2026-11-04",
-   "2026-11-05"
+   "2026-11-05",
+   "2026-11-06"
   ],
   "accounts": [
    {
@@ -1059,7 +1080,8 @@
      104429.63,
      103706.84,
      104006.4,
-     102924.21
+     102924.21,
+     102584.74
     ]
    },
    {
@@ -1102,7 +1124,8 @@
      100761.83,
      100180.29,
      100870.31,
-     97504.99
+     97504.99,
+     98085.28
     ]
    },
    {
@@ -1145,7 +1168,8 @@
      99336.97,
      99634.15,
      101279.86,
-     96814.26
+     96814.26,
+     97116.72
     ]
    },
    {
@@ -1188,22 +1212,23 @@
      100734.22,
      100585.03,
      102695.18,
-     99019.05
+     99019.05,
+     99088.38
     ]
    }
   ]
  },
  "totals": {
-  "ai": 102924.21,
-  "random": 97504.99,
-  "spy_hold": 96814.26,
-  "equal_hold": 99019.05
+  "ai": 102584.74,
+  "random": 98085.28,
+  "spy_hold": 97116.72,
+  "equal_hold": 99088.38
  },
  "account": {
   "cash": 46682.57,
-  "holdings_value": 56241.64,
-  "total_equity": 102924.21,
-  "return_pct": 0.0292
+  "holdings_value": 55902.17,
+  "total_equity": 102584.74,
+  "return_pct": 0.0258
  },
  "positions": [
   {
@@ -1211,80 +1236,95 @@
    "sector": "Financials",
    "shares": 22.0,
    "avg_cost": 578.4909,
-   "price": 655.92,
-   "value": 14430.24,
-   "unrealized": 1703.44,
-   "return_pct": 0.1338,
-   "weight": 0.1402
+   "price": 652.7,
+   "value": 14359.4,
+   "unrealized": 1632.6,
+   "return_pct": 0.1283,
+   "weight": 0.14
   },
   {
    "ticker": "LLY",
    "sector": "Healthcare",
    "shares": 10.0,
    "avg_cost": 1174.4123,
-   "price": 1364.73,
-   "value": 13647.3,
-   "unrealized": 1903.18,
-   "return_pct": 0.1621,
-   "weight": 0.1326
+   "price": 1354.0,
+   "value": 13540.0,
+   "unrealized": 1795.88,
+   "return_pct": 0.1529,
+   "weight": 0.132
   },
   {
    "ticker": "CVX",
    "sector": "Energy",
    "shares": 47.0,
    "avg_cost": 218.2185,
-   "price": 212.93,
-   "value": 10007.71,
-   "unrealized": -248.56,
-   "return_pct": -0.0242,
-   "weight": 0.0972
+   "price": 212.61,
+   "value": 9992.67,
+   "unrealized": -263.6,
+   "return_pct": -0.0257,
+   "weight": 0.0974
   },
   {
    "ticker": "COST",
    "sector": "Consumer",
    "shares": 8.0,
    "avg_cost": 991.5668,
-   "price": 1065.59,
-   "value": 8524.72,
-   "unrealized": 592.19,
-   "return_pct": 0.0747,
-   "weight": 0.0828
+   "price": 1053.5601,
+   "value": 8428.48,
+   "unrealized": 495.95,
+   "return_pct": 0.0625,
+   "weight": 0.0822
   },
   {
    "ticker": "AAPL",
    "sector": "Technology",
    "shares": 11.0,
    "avg_cost": 347.0585,
-   "price": 344.17,
-   "value": 3785.87,
-   "unrealized": -31.77,
-   "return_pct": -0.0083,
-   "weight": 0.0368
+   "price": 342.37,
+   "value": 3766.07,
+   "unrealized": -51.57,
+   "return_pct": -0.0135,
+   "weight": 0.0367
   },
   {
    "ticker": "XOM",
    "sector": "Energy",
    "shares": 20.0,
    "avg_cost": 166.2761,
-   "price": 165.3,
-   "value": 3306.0,
-   "unrealized": -19.52,
-   "return_pct": -0.0059,
-   "weight": 0.0321
+   "price": 165.87,
+   "value": 3317.4,
+   "unrealized": -8.12,
+   "return_pct": -0.0024,
+   "weight": 0.0323
   },
   {
    "ticker": "PFE",
    "sector": "Healthcare",
    "shares": 85.0,
    "avg_cost": 30.06,
-   "price": 29.88,
-   "value": 2539.8,
-   "unrealized": -15.3,
-   "return_pct": -0.006,
-   "weight": 0.0247
+   "price": 29.39,
+   "value": 2498.15,
+   "unrealized": -56.95,
+   "return_pct": -0.0223,
+   "weight": 0.0244
   }
  ],
- "pending_orders": [],
+ "pending_orders": [
+  {
+   "ticker": "CVX",
+   "side": "SELL",
+   "shares": 11,
+   "created_date": "2026-11-06",
+   "confidence": 0.44
+  },
+  {
+   "ticker": "XOM",
+   "side": "SELL",
+   "shares": 20,
+   "created_date": "2026-11-06",
+   "confidence": 0.45
+  }
+ ],
  "trades": [
   {
    "date": "2026-11-05",
@@ -1944,6 +1984,7 @@
   }
  ],
  "days": [
+  "2026-11-06",
   "2026-11-05",
   "2026-11-04",
   "2026-11-02",
@@ -2008,30 +2049,30 @@
   {
    "source": "chair",
    "label": "議長",
-   "n": 66,
-   "accuracy": 0.379,
-   "avg_stated_confidence": 0.551,
-   "calibration_gap": 0.172,
+   "n": 67,
+   "accuracy": 0.373,
+   "avg_stated_confidence": 0.55,
+   "calibration_gap": 0.177,
    "avg_residual_on_directional": -0.0333,
    "reliable": true
   },
   {
    "source": "technical",
    "label": "テクニカル",
-   "n": 123,
-   "accuracy": 0.585,
-   "avg_stated_confidence": 0.556,
-   "calibration_gap": -0.029,
-   "avg_residual_on_directional": -0.0331,
+   "n": 131,
+   "accuracy": 0.595,
+   "avg_stated_confidence": 0.555,
+   "calibration_gap": -0.04,
+   "avg_residual_on_directional": -0.0241,
    "reliable": true
   },
   {
    "source": "macro",
    "label": "マクロ",
-   "n": 62,
-   "accuracy": 0.468,
-   "avg_stated_confidence": 0.48,
-   "calibration_gap": 0.012,
+   "n": 63,
+   "accuracy": 0.46,
+   "avg_stated_confidence": 0.479,
+   "calibration_gap": 0.018,
    "avg_residual_on_directional": -0.0073,
    "reliable": true
   }
@@ -2040,24 +2081,24 @@
  "calibration": [
   {
    "range": "0.0-0.5",
-   "n": 39,
+   "n": 41,
    "stated_confidence": 0.444,
-   "actual_accuracy": 0.462,
-   "gap": -0.018
+   "actual_accuracy": 0.463,
+   "gap": -0.02
   },
   {
    "range": "0.5-0.6",
-   "n": 162,
+   "n": 169,
    "stated_confidence": 0.53,
-   "actual_accuracy": 0.543,
-   "gap": -0.013
+   "actual_accuracy": 0.544,
+   "gap": -0.014
   },
   {
    "range": "0.6-0.7",
-   "n": 46,
+   "n": 47,
    "stated_confidence": 0.62,
-   "actual_accuracy": 0.413,
-   "gap": 0.207
+   "actual_accuracy": 0.426,
+   "gap": 0.195
   },
   {
    "range": "0.7-0.8",
@@ -2068,31 +2109,31 @@
   }
  ],
  "predictions": {
-  "recorded": 1025,
-  "scored": 251,
-  "awaiting": 774,
+  "recorded": 1057,
+  "scored": 261,
+  "awaiting": 796,
   "scorecard": {
    "chair": {
-    "n": 66,
-    "accuracy": 0.379,
-    "avg_stated_confidence": 0.551,
-    "calibration_gap": 0.172,
+    "n": 67,
+    "accuracy": 0.373,
+    "avg_stated_confidence": 0.55,
+    "calibration_gap": 0.177,
     "avg_residual_on_directional": -0.0333,
     "reliable": true
    },
    "technical": {
-    "n": 123,
-    "accuracy": 0.585,
-    "avg_stated_confidence": 0.556,
-    "calibration_gap": -0.029,
-    "avg_residual_on_directional": -0.0331,
+    "n": 131,
+    "accuracy": 0.595,
+    "avg_stated_confidence": 0.555,
+    "calibration_gap": -0.04,
+    "avg_residual_on_directional": -0.0241,
     "reliable": true
    },
    "macro": {
-    "n": 62,
-    "accuracy": 0.468,
-    "avg_stated_confidence": 0.48,
-    "calibration_gap": 0.012,
+    "n": 63,
+    "accuracy": 0.46,
+    "avg_stated_confidence": 0.479,
+    "calibration_gap": 0.018,
     "avg_residual_on_directional": -0.0073,
     "reliable": true
    },
@@ -2101,24 +2142,24 @@
   "calibration": [
    {
     "range": "0.0-0.5",
-    "n": 39,
+    "n": 41,
     "stated_confidence": 0.444,
-    "actual_accuracy": 0.462,
-    "gap": -0.018
+    "actual_accuracy": 0.463,
+    "gap": -0.02
    },
    {
     "range": "0.5-0.6",
-    "n": 162,
+    "n": 169,
     "stated_confidence": 0.53,
-    "actual_accuracy": 0.543,
-    "gap": -0.013
+    "actual_accuracy": 0.544,
+    "gap": -0.014
    },
    {
     "range": "0.6-0.7",
-    "n": 46,
+    "n": 47,
     "stated_confidence": 0.62,
-    "actual_accuracy": 0.413,
-    "gap": 0.207
+    "actual_accuracy": 0.426,
+    "gap": 0.195
    },
    {
     "range": "0.7-0.8",
