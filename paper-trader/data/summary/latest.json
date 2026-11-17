@@ -1,6 +1,6 @@
 {
- "updated": "2026-11-17",
- "as_of": "2026-11-16",
+ "updated": "2026-11-18",
+ "as_of": "2026-11-17",
  "primary_run": "r1",
  "runs": [
   {
@@ -48,7 +48,8 @@
      "2026-11-09",
      "2026-11-10",
      "2026-11-12",
-     "2026-11-16"
+     "2026-11-16",
+     "2026-11-17"
     ],
     "accounts": [
      {
@@ -96,7 +97,8 @@
        103319.05,
        103591.7,
        103858.1,
-       104323.37
+       104323.37,
+       103649.55
       ]
      },
      {
@@ -144,7 +146,8 @@
        99215.22,
        99058.56,
        100214.26,
-       99164.96
+       99164.96,
+       98424.68
       ]
      },
      {
@@ -192,7 +195,8 @@
        99414.9,
        99049.04,
        100000.01,
-       97732.21
+       97732.21,
+       96740.29
       ]
      },
      {
@@ -240,22 +244,23 @@
        101369.22,
        101374.27,
        102283.21,
-       100868.04
+       100868.04,
+       99693.61
       ]
      }
     ]
    },
    "totals": {
-    "ai": 104323.37,
-    "random": 99164.96,
-    "spy_hold": 97732.21,
-    "equal_hold": 100868.04
+    "ai": 103649.55,
+    "random": 98424.68,
+    "spy_hold": 96740.29,
+    "equal_hold": 99693.61
    },
    "account": {
-    "cash": 42068.19,
-    "holdings_value": 62255.18,
-    "total_equity": 104323.37,
-    "return_pct": 0.0432
+    "cash": 44487.78,
+    "holdings_value": 59161.77,
+    "total_equity": 103649.55,
+    "return_pct": 0.0365
    },
    "positions": [
     {
@@ -263,89 +268,86 @@
      "sector": "Financials",
      "shares": 22.0,
      "avg_cost": 578.4909,
-     "price": 661.71,
-     "value": 14557.62,
-     "unrealized": 1830.82,
-     "return_pct": 0.1439,
-     "weight": 0.1395
+     "price": 645.73,
+     "value": 14206.06,
+     "unrealized": 1479.26,
+     "return_pct": 0.1162,
+     "weight": 0.1371
     },
     {
      "ticker": "LLY",
      "sector": "Healthcare",
      "shares": 10.0,
      "avg_cost": 1174.4123,
-     "price": 1431.67,
-     "value": 14316.7,
-     "unrealized": 2572.58,
-     "return_pct": 0.2191,
-     "weight": 0.1372
+     "price": 1415.55,
+     "value": 14155.5,
+     "unrealized": 2411.38,
+     "return_pct": 0.2053,
+     "weight": 0.1366
     },
     {
      "ticker": "CVX",
      "sector": "Energy",
      "shares": 43.0,
      "avg_cost": 218.2463,
-     "price": 217.14,
-     "value": 9337.02,
-     "unrealized": -47.57,
-     "return_pct": -0.0051,
-     "weight": 0.0895
+     "price": 216.13,
+     "value": 9293.59,
+     "unrealized": -91.0,
+     "return_pct": -0.0097,
+     "weight": 0.0897
     },
     {
      "ticker": "COST",
      "sector": "Consumer",
      "shares": 8.0,
      "avg_cost": 991.5668,
-     "price": 1113.74,
-     "value": 8909.92,
-     "unrealized": 977.39,
-     "return_pct": 0.1232,
-     "weight": 0.0854
+     "price": 1110.08,
+     "value": 8880.64,
+     "unrealized": 948.11,
+     "return_pct": 0.1195,
+     "weight": 0.0857
     },
     {
      "ticker": "AAPL",
      "sector": "Technology",
      "shares": 21.0,
      "avg_cost": 349.9309,
-     "price": 352.78,
-     "value": 7408.38,
-     "unrealized": 59.83,
-     "return_pct": 0.0081,
-     "weight": 0.071
+     "price": 351.91,
+     "value": 7390.11,
+     "unrealized": 41.56,
+     "return_pct": 0.0057,
+     "weight": 0.0713
     },
     {
      "ticker": "KO",
      "sector": "Consumer",
      "shares": 53.0,
      "avg_cost": 98.2291,
-     "price": 99.48,
-     "value": 5272.44,
-     "unrealized": 66.3,
-     "return_pct": 0.0127,
+     "price": 98.79,
+     "value": 5235.87,
+     "unrealized": 29.73,
+     "return_pct": 0.0057,
      "weight": 0.0505
-    },
-    {
-     "ticker": "PFE",
-     "sector": "Healthcare",
-     "shares": 85.0,
-     "avg_cost": 30.06,
-     "price": 28.86,
-     "value": 2453.1,
-     "unrealized": -102.0,
-     "return_pct": -0.0399,
-     "weight": 0.0235
     }
    ],
    "pending_orders": [
     {
-     "ticker": "PFE",
+     "ticker": "COST",
      "side": "SELL",
-     "shares": 85,
-     "created_date": "2026-11-16",
+     "shares": 3,
+     "created_date": "2026-11-17",
      "confidence": 0.5
     }
    ],
    "trades": [
+    {
+     "date": "2026-11-17",
+     "ticker": "PFE",
+     "side": "SELL",
+     "shares": 85.0,
+     "price": 28.4658,
+     "value": 2419.59
+    },
     {
      "date": "2026-11-13",
      "ticker": "KO",
@@ -1102,7 +1104,8 @@
    "2026-11-09",
    "2026-11-10",
    "2026-11-12",
-   "2026-11-16"
+   "2026-11-16",
+   "2026-11-17"
   ],
   "accounts": [
    {
@@ -1150,7 +1153,8 @@
      103319.05,
      103591.7,
      103858.1,
-     104323.37
+     104323.37,
+     103649.55
     ]
    },
    {
@@ -1198,7 +1202,8 @@
      99215.22,
      99058.56,
      100214.26,
-     99164.96
+     99164.96,
+     98424.68
     ]
    },
    {
@@ -1246,7 +1251,8 @@
      99414.9,
      99049.04,
      100000.01,
-     97732.21
+     97732.21,
+     96740.29
     ]
    },
    {
@@ -1294,22 +1300,23 @@
      101369.22,
      101374.27,
      102283.21,
-     100868.04
+     100868.04,
+     99693.61
     ]
    }
   ]
  },
  "totals": {
-  "ai": 104323.37,
-  "random": 99164.96,
-  "spy_hold": 97732.21,
-  "equal_hold": 100868.04
+  "ai": 103649.55,
+  "random": 98424.68,
+  "spy_hold": 96740.29,
+  "equal_hold": 99693.61
  },
  "account": {
-  "cash": 42068.19,
-  "holdings_value": 62255.18,
-  "total_equity": 104323.37,
-  "return_pct": 0.0432
+  "cash": 44487.78,
+  "holdings_value": 59161.77,
+  "total_equity": 103649.55,
+  "return_pct": 0.0365
  },
  "positions": [
   {
@@ -1317,89 +1324,86 @@
    "sector": "Financials",
    "shares": 22.0,
    "avg_cost": 578.4909,
-   "price": 661.71,
-   "value": 14557.62,
-   "unrealized": 1830.82,
-   "return_pct": 0.1439,
-   "weight": 0.1395
+   "price": 645.73,
+   "value": 14206.06,
+   "unrealized": 1479.26,
+   "return_pct": 0.1162,
+   "weight": 0.1371
   },
   {
    "ticker": "LLY",
    "sector": "Healthcare",
    "shares": 10.0,
    "avg_cost": 1174.4123,
-   "price": 1431.67,
-   "value": 14316.7,
-   "unrealized": 2572.58,
-   "return_pct": 0.2191,
-   "weight": 0.1372
+   "price": 1415.55,
+   "value": 14155.5,
+   "unrealized": 2411.38,
+   "return_pct": 0.2053,
+   "weight": 0.1366
   },
   {
    "ticker": "CVX",
    "sector": "Energy",
    "shares": 43.0,
    "avg_cost": 218.2463,
-   "price": 217.14,
-   "value": 9337.02,
-   "unrealized": -47.57,
-   "return_pct": -0.0051,
-   "weight": 0.0895
+   "price": 216.13,
+   "value": 9293.59,
+   "unrealized": -91.0,
+   "return_pct": -0.0097,
+   "weight": 0.0897
   },
   {
    "ticker": "COST",
    "sector": "Consumer",
    "shares": 8.0,
    "avg_cost": 991.5668,
-   "price": 1113.74,
-   "value": 8909.92,
-   "unrealized": 977.39,
-   "return_pct": 0.1232,
-   "weight": 0.0854
+   "price": 1110.08,
+   "value": 8880.64,
+   "unrealized": 948.11,
+   "return_pct": 0.1195,
+   "weight": 0.0857
   },
   {
    "ticker": "AAPL",
    "sector": "Technology",
    "shares": 21.0,
    "avg_cost": 349.9309,
-   "price": 352.78,
-   "value": 7408.38,
-   "unrealized": 59.83,
-   "return_pct": 0.0081,
-   "weight": 0.071
+   "price": 351.91,
+   "value": 7390.11,
+   "unrealized": 41.56,
+   "return_pct": 0.0057,
+   "weight": 0.0713
   },
   {
    "ticker": "KO",
    "sector": "Consumer",
    "shares": 53.0,
    "avg_cost": 98.2291,
-   "price": 99.48,
-   "value": 5272.44,
-   "unrealized": 66.3,
-   "return_pct": 0.0127,
+   "price": 98.79,
+   "value": 5235.87,
+   "unrealized": 29.73,
+   "return_pct": 0.0057,
    "weight": 0.0505
-  },
-  {
-   "ticker": "PFE",
-   "sector": "Healthcare",
-   "shares": 85.0,
-   "avg_cost": 30.06,
-   "price": 28.86,
-   "value": 2453.1,
-   "unrealized": -102.0,
-   "return_pct": -0.0399,
-   "weight": 0.0235
   }
  ],
  "pending_orders": [
   {
-   "ticker": "PFE",
+   "ticker": "COST",
    "side": "SELL",
-   "shares": 85,
-   "created_date": "2026-11-16",
+   "shares": 3,
+   "created_date": "2026-11-17",
    "confidence": 0.5
   }
  ],
  "trades": [
+  {
+   "date": "2026-11-17",
+   "ticker": "PFE",
+   "side": "SELL",
+   "shares": 85.0,
+   "price": 28.4658,
+   "value": 2419.59
+  },
   {
    "date": "2026-11-13",
    "ticker": "KO",
@@ -2106,6 +2110,7 @@
   }
  ],
  "days": [
+  "2026-11-17",
   "2026-11-16",
   "2026-11-12",
   "2026-11-10",
@@ -2176,31 +2181,31 @@
   {
    "source": "chair",
    "label": "議長",
-   "n": 89,
-   "accuracy": 0.449,
-   "avg_stated_confidence": 0.543,
-   "calibration_gap": 0.093,
-   "avg_residual_on_directional": -0.011,
+   "n": 99,
+   "accuracy": 0.465,
+   "avg_stated_confidence": 0.539,
+   "calibration_gap": 0.074,
+   "avg_residual_on_directional": -0.0059,
    "reliable": true
   },
   {
    "source": "technical",
    "label": "テクニカル",
-   "n": 158,
+   "n": 173,
    "accuracy": 0.595,
-   "avg_stated_confidence": 0.554,
-   "calibration_gap": -0.041,
-   "avg_residual_on_directional": -0.0049,
+   "avg_stated_confidence": 0.552,
+   "calibration_gap": -0.043,
+   "avg_residual_on_directional": 0.0022,
    "reliable": true
   },
   {
    "source": "macro",
    "label": "マクロ",
-   "n": 99,
-   "accuracy": 0.556,
-   "avg_stated_confidence": 0.477,
-   "calibration_gap": -0.078,
-   "avg_residual_on_directional": 0.0031,
+   "n": 107,
+   "accuracy": 0.542,
+   "avg_stated_confidence": 0.478,
+   "calibration_gap": -0.064,
+   "avg_residual_on_directional": -0.0013,
    "reliable": true
   }
  ],
@@ -2208,24 +2213,24 @@
  "calibration": [
   {
    "range": "0.0-0.5",
-   "n": 60,
-   "stated_confidence": 0.443,
-   "actual_accuracy": 0.517,
-   "gap": -0.074
+   "n": 70,
+   "stated_confidence": 0.444,
+   "actual_accuracy": 0.5,
+   "gap": -0.056
   },
   {
    "range": "0.5-0.6",
-   "n": 230,
+   "n": 250,
    "stated_confidence": 0.529,
-   "actual_accuracy": 0.583,
-   "gap": -0.054
+   "actual_accuracy": 0.584,
+   "gap": -0.055
   },
   {
    "range": "0.6-0.7",
-   "n": 52,
+   "n": 55,
    "stated_confidence": 0.619,
-   "actual_accuracy": 0.442,
-   "gap": 0.177
+   "actual_accuracy": 0.455,
+   "gap": 0.164
   },
   {
    "range": "0.7-0.8",
@@ -2236,32 +2241,32 @@
   }
  ],
  "predictions": {
-  "recorded": 1153,
-  "scored": 346,
-  "awaiting": 807,
+  "recorded": 1185,
+  "scored": 379,
+  "awaiting": 806,
   "scorecard": {
    "chair": {
-    "n": 89,
-    "accuracy": 0.449,
-    "avg_stated_confidence": 0.543,
-    "calibration_gap": 0.093,
-    "avg_residual_on_directional": -0.011,
+    "n": 99,
+    "accuracy": 0.465,
+    "avg_stated_confidence": 0.539,
+    "calibration_gap": 0.074,
+    "avg_residual_on_directional": -0.0059,
     "reliable": true
    },
    "technical": {
-    "n": 158,
+    "n": 173,
     "accuracy": 0.595,
-    "avg_stated_confidence": 0.554,
-    "calibration_gap": -0.041,
-    "avg_residual_on_directional": -0.0049,
+    "avg_stated_confidence": 0.552,
+    "calibration_gap": -0.043,
+    "avg_residual_on_directional": 0.0022,
     "reliable": true
    },
    "macro": {
-    "n": 99,
-    "accuracy": 0.556,
-    "avg_stated_confidence": 0.477,
-    "calibration_gap": -0.078,
-    "avg_residual_on_directional": 0.0031,
+    "n": 107,
+    "accuracy": 0.542,
+    "avg_stated_confidence": 0.478,
+    "calibration_gap": -0.064,
+    "avg_residual_on_directional": -0.0013,
     "reliable": true
    },
    "_note": "n が 30 未満の成績は統計的にほぼ無意味。個別株の残差リターンはノイズが大きく、少ないサンプルの的中率で「誰が優秀か」を判断してはいけない。calibration_gap(申告した確信度 − 実際の的中率)が正なら自信過剰。"
@@ -2269,24 +2274,24 @@
   "calibration": [
    {
     "range": "0.0-0.5",
-    "n": 60,
-    "stated_confidence": 0.443,
-    "actual_accuracy": 0.517,
-    "gap": -0.074
+    "n": 70,
+    "stated_confidence": 0.444,
+    "actual_accuracy": 0.5,
+    "gap": -0.056
    },
    {
     "range": "0.5-0.6",
-    "n": 230,
+    "n": 250,
     "stated_confidence": 0.529,
-    "actual_accuracy": 0.583,
-    "gap": -0.054
+    "actual_accuracy": 0.584,
+    "gap": -0.055
    },
    {
     "range": "0.6-0.7",
-    "n": 52,
+    "n": 55,
     "stated_confidence": 0.619,
-    "actual_accuracy": 0.442,
-    "gap": 0.177
+    "actual_accuracy": 0.455,
+    "gap": 0.164
    },
    {
     "range": "0.7-0.8",
